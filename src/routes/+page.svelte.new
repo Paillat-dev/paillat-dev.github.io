@@ -1,0 +1,153 @@
+<script lang="ts">
+  import Header from "$lib/components/Header.svelte";
+  import Footer from "$lib/components/Footer.svelte";
+  import ProjectCard from "$lib/components/ProjectCard.svelte";
+  import PostCard from "$lib/components/PostCard.svelte";
+  import WorkCard from "$lib/components/WorkCard.svelte";
+  import * as Button from "$lib/components/ui/button";
+  import * as Select from "$lib/components/ui/select";
+  import * as Separator from "$lib/components/ui/separator";
+  
+  // Define sample data with runes
+  const projects = $state([
+    { id: 1, title: "Project 1" },
+    { id: 2, title: "Project 2" },
+    { id: 3, title: "Project 3" },
+  ]);
+  
+  const posts = $state([
+    { id: 1, title: "Post 1" },
+    { id: 2, title: "Post 2" },
+    { id: 3, title: "Post 3" },
+  ]);
+  
+  const works = $state([
+    { id: 1, title: "Work 1", techs: ["React", "TypeScript"], type: "Web App" },
+    { id: 2, title: "Work 2", techs: ["Svelte", "TailwindCSS"], type: "Website" },
+    { id: 3, title: "Work 3", techs: ["Node.js", "Express"], type: "API" },
+  ]);
+  
+  // Filter state
+  let selectedTech = $state(null);
+  let selectedType = $state(null);
+  
+  // Computed property for filtered works
+  const filteredWorks = $derived(() => {
+    return works.filter(work => {
+      if (selectedTech && !work.techs.includes(selectedTech)) return false;
+      if (selectedType && work.type !== selectedType) return false;
+      return true;
+    });
+  });
+  
+  // Available filter options
+  const techOptions = $derived(() => {
+    const techs = new Set();
+    works.forEach(work => work.techs.forEach(tech => techs.add(tech)));
+    return Array.from(techs);
+  });
+  
+  const typeOptions = $derived(() => {
+    const types = new Set();
+    works.forEach(work => types.add(work.type));
+    return Array.from(types);
+  });
+  
+  function handleTechChange(value) {
+    selectedTech = value;
+  }
+  
+  function handleTypeChange(value) {
+    selectedType = value;
+  }
+</script>
+
+<div class="container mx-auto px-4 max-w-4xl">
+  <Header />
+  
+  <main>
+    <!-- Projects and Blog Posts Section -->
+    <div class="grid md:grid-cols-2 gap-12 mb-16">
+      <!-- Projects Column -->
+      <section>
+        <h2 class="text-2xl font-semibold mb-6">Latest Projects</h2>
+        <div class="relative">
+          <div class="mb-4">
+            {#each projects.slice(0, 1) as project}
+              <ProjectCard title={project.title} />
+            {/each}
+          </div>
+          <div class="mt-4">
+            <Button.Root variant="link" class="p-0 text-primary hover:underline">View all Projects</Button.Root>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Blog Posts Column -->
+      <section>
+        <h2 class="text-2xl font-semibold mb-6">Latest Blog Posts</h2>
+        <div class="relative">
+          <div class="mb-4">
+            {#each posts.slice(0, 1) as post}
+              <PostCard title={post.title} />
+            {/each}
+          </div>
+          <div class="mt-4">
+            <Button.Root variant="link" class="p-0 text-primary hover:underline">View all Posts</Button.Root>
+          </div>
+        </div>
+      </section>
+    </div>
+    
+    <!-- Works Section -->
+    <section class="mt-28">
+      <h2 class="text-4xl font-bold text-center mb-10">My Works</h2>
+      
+      <!-- Filters -->
+      <div class="flex gap-4 mb-3">
+        <Select.Root type="single" onSelectedChange={handleTechChange}>
+          <Select.Trigger class="w-[120px]">
+            <Select.Value placeholder="Techs" />
+          </Select.Trigger>
+          <Select.Content>
+            <Select.Item value={null}>All Techs</Select.Item>
+            {#each techOptions as tech}
+              <Select.Item value={tech}>{tech}</Select.Item>
+            {/each}
+          </Select.Content>
+        </Select.Root>
+        
+        <Select.Root type="single" onSelectedChange={handleTypeChange}>
+          <Select.Trigger class="w-[120px]">
+            <Select.Value placeholder="Type" />
+          </Select.Trigger>
+          <Select.Content>
+            <Select.Item value={null}>All Types</Select.Item>
+            {#each typeOptions as type}
+              <Select.Item value={type}>{type}</Select.Item>
+            {/each}
+          </Select.Content>
+        </Select.Root>
+      </div>
+      
+      <p class="text-sm text-rose-500 mb-8">
+        These are dropdowns that can filter by tech used and type, or both
+      </p>
+      
+      <!-- Works Grid -->
+      <div class="grid md:grid-cols-1 gap-8">
+        {#each filteredWorks.slice(0, 1) as work}
+          <WorkCard 
+            title={work.title} 
+            techs={work.techs} 
+            type={work.type} 
+          />
+        {/each}
+      </div>
+    </section>
+  </main>
+  
+  <Separator.Root class="my-8" />
+  
+  <Footer />
+</div>
