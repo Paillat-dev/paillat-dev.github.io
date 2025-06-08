@@ -1,0 +1,192 @@
+---
+import { Image } from "astro:assets";
+import { cn } from "$lib/utils.ts";
+import BentoCard from "$lib/components/cards/BentoCard.astro";
+import GithubCard from "$lib/components/cards/GithubCard.astro";
+
+import KPDH from "$src/assets/kpdh.webp";
+import LinkedIn from "$src/assets/LI-In-Bug.png";
+import NiceBots from "$src/assets/nicebots.png";
+import EasyTextCard from "$lib/components/cards/EasyTextCard.astro";
+import TitleCard from "$lib/components/cards/TitleCard.astro";
+import Pycord from "$src/assets/pycord-logo-solid-256.png";
+import {
+  Printables,
+  Svelte,
+  Github,
+  Discord,
+  Shadcnui,
+  Tailwindcss,
+  Astral,
+} from "simple-icons-astro";
+import { Scale } from "@lucide/svelte";
+
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props as Props;
+---
+
+<section
+  class={cn(
+    "grid grid-cols-2 lg:grid-cols-4 auto-rows-card auto-cols-fr w-full max-w-2card lg:max-w-none lg:w-4card lg:h-full lg:min-h-0",
+    className
+  )}
+>
+  <GithubCard />
+  <BentoCard width={2} height={1} class="items-center justify-center p-0">
+    <Image src={KPDH} alt="KPOP Demon Hunters Poster" />
+  </BentoCard>
+  <BentoCard width={2} height={2}>
+    <blockquote>
+      “If we were unable to distinguish between them, then the only lives worthy of respect would be
+      those that resemble our own—an assertion of narcissism, supremacy, and cultural arrogance that
+      rejects any ethical encounter with difference.”
+    </blockquote>
+  </BentoCard>
+
+  <EasyTextCard
+    width={1}
+    height={1}
+    brandColor="#5865f2"
+    icon={Discord}
+    href="https://discord.com/users/707196665668436019"
+    title="@paillat"
+    sub="Discord"
+  />
+  <EasyTextCard
+    width={1}
+    height={1}
+    brandColor="#2868b2"
+    href="https://www.linkedin.com/in/paillat-dev/"
+    title="Jérémie C."
+    sub="LinkedIn"
+  >
+    <Image src={LinkedIn} alt="LinkedIn Logo" slot="icon" class="bg-transparent" />
+  </EasyTextCard>
+  <TitleCard width={4}> Misc Projects / Portfolio </TitleCard>
+  <EasyTextCard
+    width={2}
+    height={1}
+    href="https://pycord.dev/about"
+    title="Pycord-Development, my main occupation currently"
+    sub="Project Manager and Maintainer of the Discord API Wrapper for Python, Pycord."
+    brandColor=""
+  >
+    <Image src={Pycord} alt="Pycord Logo" slot="icon" class="bg-transparent" />
+  </EasyTextCard>
+  <EasyTextCard
+    width={1}
+    height={1}
+    brandColor=""
+    href="https://nicebots.xyz/"
+    title="NiceBots.xyz"
+    sub='My biggest side "project".'
+  >
+    <Image src={NiceBots} alt="NiceBots Logo" slot="icon" class="bg-transparent" />
+  </EasyTextCard>
+  <EasyTextCard
+    width={1}
+    height={1}
+    href="https://github.com/ItsDrike/code-jam-2024"
+    title="Python Discord Code Jam 11"
+    sub="Went top 10 with our team!"
+    icon={Github}
+    brandColor="#000000"
+  />
+  <EasyTextCard
+    width={1}
+    height={1}
+    href="https://mediationcorner.ch/"
+    title="mediationcorner.ch"
+    sub="A commissioned website. Built with Astro, Svelte and TailwindCSS."
+    brandColor=""
+    icon={Scale}
+    iconClass="text-foreground"
+  />
+  <EasyTextCard
+    width={1}
+    height={1}
+    href="https://www.printables.com/@paillat"
+    title="(Some of) My 3d Models"
+    sub="prinables.com"
+    brandColor="#fa682d"
+    icon={Printables}
+  />
+  <EasyTextCard
+    width={2}
+    height={1}
+    href="https://github.com/nicebots-xyz/discordcn"
+    title="DiscordCN"
+    sub=" An unofficial, community-driven inspirational reference for Discord app interface patterns. Built with Astro, Svelte, TailwindCSS and lots of time."
+    icon={Github}
+    brandColor="#000000"
+  />
+  <EasyTextCard
+    width={2}
+    height={1}
+    href="https://github.com/Paillat-dev/viralfactory"
+    title="[Archived] Viralfactory"
+    sub="A project to automate content creation and upload using AI."
+    icon={Github}
+    brandColor="#000000"
+  />
+  <EasyTextCard
+    width={1}
+    height={1}
+    href="https://www.github.com/Paillat-dev/website"
+    title="This Website !"
+    sub="Built with Astro, Svelte and TailwindCSS."
+    brandColor="#000000"
+    icon={Github}
+  />
+  <EasyTextCard
+    width={1}
+    height={1}
+    href="https://github.com/Paillat-dev/svelte-github-calendar/"
+    title="svelte-github-calendar"
+    sub="Used above to display my activity."
+    brandColor="#000000"
+    icon={Github}
+  />
+  <TitleCard width={4}> Tools and Tech I use </TitleCard>
+  <EasyTextCard
+    width={1}
+    height={1}
+    href="https://www.printables.com/@paillat"
+    title="Svelte"
+    sub="svelte.dev"
+    brandColor="#ff3d00"
+    icon={Svelte}
+  />
+  <EasyTextCard
+    width={1}
+    height={1}
+    href="https://www.shadcn-svelte.com/"
+    title="shadcn-svelte"
+    sub="shadcn-svelte.com"
+    brandColor="#000000"
+    icon={Shadcnui}
+    iconClass="text-[#ff3d00]"
+  />
+  <EasyTextCard
+    width={1}
+    height={1}
+    href="https://tailwindcss.com/"
+    title="TailwindCSS"
+    sub="tailwindcss.com"
+    brandColor=""
+    icon={Tailwindcss}
+    iconClass="text-[#34bdf7]"
+  />
+  <EasyTextCard
+    width={1}
+    height={1}
+    href="https://astral.sh/"
+    title="ruff, ty, uv by Astral"
+    sub="astral.sh"
+    brandColor="#30173d"
+    icon={Astral}
+    iconClass="text-[#d7ff64] p-0"
+  />
+</section>

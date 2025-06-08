@@ -1,0 +1,87 @@
+---
+import { GitHubCalendar } from "svelte-github-calendar";
+import { Github } from "simple-icons-astro";
+import EasyTextCard from "$lib/components/cards/EasyTextCard.astro";
+interface Props {
+  width?: 1 | 2 | 4;
+  height?: 1 | 2 | 4;
+  class?: string;
+}
+
+const { width = 2, height = 2, class: className = "" }: Props = Astro.props;
+---
+
+<EasyTextCard
+  width={width}
+  height={height}
+  href="https://github.com/Paillat-dev"
+  brandColor="#000000"
+  title="Paillat-dev"
+  sub="Github"
+  icon={Github}
+  class={className}
+>
+  <div class="mt-auto">
+    <GitHubCalendar
+      username="Paillat-dev"
+      global_stats={false}
+      responsive={true}
+      tooltips={true}
+      client:only="svelte"
+      class="!border-none"
+    />
+  </div>
+</EasyTextCard>
+
+<style is:global>
+  .calendar {
+    min-height: 0 !important;
+  }
+  .calendar > div:first-child > a:first-of-type {
+    @apply hidden;
+  }
+  .calendar div {
+    @apply border-none;
+  }
+
+  .calendar .graph-before-activity-overview > div > div:last-child {
+    @apply hidden;
+  }
+
+  .calendar > div > div > div > div > table > caption {
+    @apply hidden;
+  }
+
+  .calendar > div > div > div > div {
+    overflow: hidden !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .calendar > div > div > div > div::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
+<script>
+  function scrollToEnd() {
+    const table = document.querySelector(".calendar > div > div > div > div");
+    if (table) {
+      table.scrollLeft = table.scrollWidth;
+      return true;
+    }
+    return false;
+  }
+
+  if (!scrollToEnd()) {
+    const observer = new MutationObserver(() => {
+      if (scrollToEnd()) {
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  }
+</script>

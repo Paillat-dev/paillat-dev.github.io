@@ -1,0 +1,15 @@
+node_modules
+dist
+.astro
+.vercel
+.next
+.turbo
+build
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+*.min.js
+*.min.css
+src/builders/
+*.mdx
+*.md

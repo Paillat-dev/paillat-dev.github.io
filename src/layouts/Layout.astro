@@ -1,0 +1,48 @@
+---
+import Seo from "$lib/components/Seo.astro";
+import "$src/styles/global.css";
+const { title, description } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+
+    <Seo title={title} description={description} />
+
+    <slot name="head" />
+  </head>
+  <body class="bg-background text-foreground antialiased">
+    <a href="#main-content" class="skip-to-content"> Skip to main content </a>
+    <slot />
+    <footer class="bg-muted p-4 lg:p-10">
+      <p class="text-muted-foreground text-center text-sm">
+        &#169; Paillat-dev 2026{year === 2026 ? "" : `-${year}`} All rights reserved.
+      </p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .skip-to-content {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+    padding: 8px 16px;
+    text-decoration: none;
+    z-index: 100;
+    font-weight: 600;
+    border-radius: 0 0 4px 0;
+  }
+
+  .skip-to-content:focus {
+    top: 0;
+  }
+</style>

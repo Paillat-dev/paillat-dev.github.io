@@ -1,0 +1,50 @@
+---
+import { cn } from "$lib/utils.ts";
+
+interface Props {
+  width: 1 | 2 | 4;
+  height: 1 | 2 | 4;
+  class?: string;
+  brandColor?: string;
+  href?: string;
+  iconClass?: string;
+}
+
+const { width, height, class: className = "", href, brandColor, iconClass }: Props = Astro.props;
+---
+
+<article
+  class={cn(
+    "m-2 p-6 rounded-3xl border border-gray-200 transition-all duration-200 gap-y-2 flex flex-col justify-between overflow-hidden shadow-xs",
+    href ? "hover:cursor-pointer hover:bg-muted active:scale-95" : "",
+    className,
+    width === 4 ? "col-span-2 lg:col-span-4" : ""
+  )}
+  style={`${
+    width === 4 ? "" : `grid-column: span ${width} / span ${width};`
+  } grid-row: span ${height} / span ${height};`}
+  onclick={href ? `window.open("${href}", "_blank").focus()` : undefined}
+>
+  {
+    Astro.slots.has("icon") && (
+      <div
+        class={cn(
+          "icon-container text-background flex size-10 items-center justify-center rounded-md border border-gray-200 p-2 shadow-xs",
+          iconClass
+        )}
+        style={`background-color: ${brandColor};`}
+      >
+        <slot name="icon" />
+      </div>
+    )
+  }
+  <slot />
+</article>
+<style is:global>
+  .icon-container svg {
+    @apply h-full w-full;
+  }
+  .icon-container:empty {
+    @apply hidden;
+  }
+</style>

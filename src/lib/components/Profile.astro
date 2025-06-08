@@ -1,0 +1,29 @@
+---
+import { Image } from "astro:assets";
+import Avatar from "$src/assets/pfp.jpg";
+import { cn } from "$lib/utils.ts";
+
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props as Props;
+---
+
+<section class={cn("flex flex-col gap-y-4", className)}>
+  <Image
+    src={Avatar}
+    alt="Profile picture"
+    class="border-muted size-32 rounded-full border-2 lg:size-36"
+  />
+  <h1 class="text-3xl font-extrabold">
+    Paillat <span class="text-muted-foreground font-light italic">· Any</span>
+  </h1>
+  <hr />
+  <p class="text-muted-foreground leading-loose">
+    French, Italian, English and some German
+    <br />
+    I enjoy building things on the internet 😄
+    <br />
+    Chicago Manual of Style 17th edition (full note)
+  </p>
+</section>
