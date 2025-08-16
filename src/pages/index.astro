@@ -1,18 +1,37 @@
 ---
-import Base from "../layouts/Base.astro";
+import Base from '../layouts/Base.astro';
+import { Button } from '@lib/components/ui/button';
 import { getCollection } from 'astro:content';
+import ProjectsGrid from '@components/ProjectsGrid.astro';
 
 const projects = await getCollection('projects');
 
-const featuredProjects = projects.filter((project) => project.data.featured);
+const featuredProjects = projects.filter(project => project.data.featured);
 ---
 
-
 <Base>
-	<section class="h-lvh flex">
-		<div class="w-2/3 flex flex-col justify-center gap-y-8">
-			<h1 class="font-extrabold">Hey, I'm Jérémie</h1>
-		</div>
-		<div class="w-1/3"></div>
-	</section>
+  <section id="hero" class="flex h-[80lvh] flex-col justify-center gap-y-8">
+    <div class="relative inline-flex flex-row font-extrabold">
+      <h2>
+        Hey, I'm
+        <span class="relative inline-block whitespace-nowrap">
+          Jérémie
+          <span
+            class="absolute bottom-0 left-0 translate-y-4 text-xl font-semibold italic opacity-70"
+            >aka Paillat</span
+          >
+        </span> 👋
+      </h2>
+    </div>
+    <div>
+      <h6>A (wannabe) software engineer from Switzerland 🇨🇭</h6>
+    </div>
+  </section>
+  <section id="projects" class="flex flex-col gap-8">
+    <h5>This is what I am currently working on:</h5>
+    <ProjectsGrid projects={featuredProjects} />
+    <Button class="text-xl opacity-80" variant="link" href="/projects"
+      >View all my projects</Button
+    >
+  </section>
 </Base>

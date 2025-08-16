@@ -1,0 +1,60 @@
+---
+import { type CollectionEntry } from 'astro:content';
+import { type ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import { twMerge } from 'tailwind-merge';
+import { Button } from '@lib/components/ui/button';
+import { Badge } from '@lib/components/ui/badge';
+import badgeMap from '@lib/config/badgeMap';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  image?: ImageMetadata | null;
+  class?: string;
+}
+
+const { project, image = null, class: className = '' }: Props = Astro.props;
+---
+
+<div
+  class={twMerge(
+    'rounded-lg border border-zinc-200 bg-white adding-4 shadow-md flex flex-col gap-4 p-4 h-full',
+    className
+  )}
+  transition:name={`project-card-${project.slug}`}
+>
+  {image && <Image src={image} alt={project.data.title} />}
+  <h4 transition:name={`project-title-${project.slug}`}>
+    {project.data.title}
+  </h4>
+  <div class="flex flex-row flex-wrap gap-1">
+    {
+      project.data.tags.map(tag => (
+        <Badge
+          transition:name={`project-badge-${tag}-${project.slug}`}
+          {...(badgeMap[tag] || badgeMap['default'])}
+        >
+          {tag}
+        </Badge>
+      ))
+    }
+  </div>
+  <p transition:name={`project-description-${project.slug}`}>
+    {project.data.description}
+  </p>
+  <div>
+    <Button variant="default" href={`/projects/${project.slug}`}
+      >Read More</Button
+    >
+    {
+      project.data.githubSlug && (
+        <Button
+          variant="link"
+          href={`https://github.com/${project.data.githubSlug}`}
+        >
+          View on GitHub
+        </Button>
+      )
+    }
+  </div>
+</div>

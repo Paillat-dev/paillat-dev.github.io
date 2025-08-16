@@ -1,0 +1,55 @@
+<!-- THIS IS SVELTE 5 CODE NOT ASTRO -->
+<script lang="ts">
+    import { type CollectionEntry } from 'astro:content';
+    import ProjectCard from '@components/ProjectCard.svelte';
+    import {Select} from '@lib/components/ui/select';
+    import {Label} from '@lib/components/ui/label';
+    import {Checkbox} from '@lib/components/ui/checkbox';
+
+    import Badge from '@lib/components/ui/badge/badge.svelte';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { projects }: Props = $props();
+let shownProjects = $derived(() => projects.filter(project => (showArchived || !project.data.archived && (project.data.tags.some(tag => selectedTags.includes(tag)) || !selectedTags.length))));
+const possibleTags = new Set(projects.flatMap(project => project.data.tags));
+let selectedTags = $state(new Array<string>());
+let showArchived = $state(false);
+
+function onTagClick(tag: string) {
+    console.log('Tag clicked:', tag);
+    if (selectedTags.includes(tag)) {
+        selectedTags = selectedTags.filter(t => t !== tag);
+    } else {
+        selectedTags = [...selectedTags, tag];
+    }
+}
+</script>
+
+<div class="flex flex-col gap-4">
+<div class="flex flex-row gap-2">
+    {#each possibleTags as tag}
+        <Badge
+            variant={selectedTags.includes(tag) ? 'default' : 'outline'}
+            onclick={() => onTagClick(tag)}
+            class="hover:cursor-pointer"
+        >
+            {tag}
+        </Badge>
+    {/each}
+</div>
+<Label>
+    <Checkbox bind:checked={showArchived} class="hover:cursor-pointer"/>
+    Show Archived
+</Label>
+<div class="grid grid-cols-1 md:grid-cols-3 lg-grid-cols-4">
+    {#each shownProjects as project}
+        <ProjectCard
+            {project}
+        />
+    {/each}
+</div>
+</div>
+

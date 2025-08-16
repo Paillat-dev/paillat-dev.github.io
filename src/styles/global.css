@@ -1,7 +1,7 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap');
+
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -45,10 +45,9 @@
   --size-3xl: 2.827rem;
   --size-4xl: 3.997rem;
   --size-5xl: 5.652rem;
-  --size-6xl: 8.001rem;
+  --size-6xl: 5.7;
   --font-style-normal: 400;
   --font-style-bold: 700;
-
 }
 
 .dark {
@@ -121,10 +120,11 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --font-code: "Geist Mono", monospace;
-  --font-sans: "Geist Sans", sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+  --font-sans: 'Geist', sans-serif;
   --text-sm: 0.707rem;
   --text-base: 1rem;
+  --text-lg: 1.125rem;
   --text-xl: 1.414rem;
   --text-2xl: 1.999rem;
   --text-3xl: 2.827rem;
@@ -141,41 +141,155 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50 font-sans text-normal text-base;
+    @apply border-border outline-ring/50 text-normal font-sans text-base;
   }
   body {
     @apply bg-background text-foreground;
   }
 
   code {
-    @apply font-code;
+    @apply font-mono;
   }
 
   pre {
-    @apply font-code;
+    @apply font-mono;
   }
 
   h1 {
-    @apply text-6xl font-bold;
-  }
-
-  h2 {
     @apply text-5xl font-bold;
   }
 
-  h3 {
+  h2 {
     @apply text-4xl font-bold;
   }
 
+  h3 {
+    @apply text-3xl font-semibold;
+  }
+
   h4 {
-    @apply text-3xl font-bold;
+    @apply text-2xl font-semibold;
   }
 
   h5 {
-    @apply text-2xl font-bold;
+    @apply text-xl font-medium;
   }
 
   h6 {
-    @apply text-xl font-bold;
+    @apply text-lg font-medium;
+  }
+  span {
+    font-size: inherit;
+    font-style: inherit;
+    font-family: inherit;
+  }
+}
+
+@layer components {
+  /* Apply this class to your article element: <article class="prose-article"> */
+  .prose-article {
+    /* Base article styles */
+    @apply leading-7;
+  }
+
+  .prose-article h1 {
+    @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+  }
+
+  .prose-article h2 {
+    @apply mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0;
+  }
+
+  .prose-article h3 {
+    @apply mt-8 scroll-m-20 text-2xl font-semibold tracking-tight;
+  }
+
+  .prose-article h4 {
+    @apply mt-6 scroll-m-20 text-xl font-semibold tracking-tight;
+  }
+
+  .prose-article p {
+    @apply leading-7 [&:not(:first-child)]:mt-6;
+  }
+
+  .prose-article blockquote {
+    @apply mt-6 border-l-2 pl-6 italic;
+  }
+
+  .prose-article ul {
+    @apply my-6 ml-6 list-disc [&>li]:mt-2;
+  }
+  .prose-article div {
+    @apply my-6;
+  }
+  .prose-article ol {
+    @apply my-6 ml-6 list-decimal [&>li]:mt-2;
+  }
+
+  .prose-article code {
+    @apply bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+  }
+
+  .prose-article pre {
+    @apply bg-muted overflow-x-auto rounded-lg border p-4;
+  }
+
+  .prose-article pre code {
+    @apply bg-transparent p-0;
+  }
+
+  .prose-article table {
+    @apply my-6 w-full;
+  }
+
+  .prose-article table thead tr {
+    @apply even:bg-muted m-0 border-t p-0;
+  }
+
+  .prose-article table tbody tr {
+    @apply even:bg-muted m-0 border-t p-0;
+  }
+
+  .prose-article table th {
+    @apply border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right;
+  }
+
+  .prose-article table td {
+    @apply border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right;
+  }
+
+  .prose-article .table-container {
+    @apply my-6 w-full overflow-y-auto;
+  }
+
+  /* Utility classes for special text styles */
+  .prose-article .lead {
+    @apply text-muted-foreground text-xl;
+  }
+
+  .prose-article .large {
+    @apply text-lg font-semibold;
+  }
+
+  .prose-article small {
+    @apply text-sm leading-none font-medium;
+  }
+
+  .prose-article .muted {
+    @apply text-muted-foreground text-sm;
+  }
+
+  /* Links */
+  .prose-article a {
+    @apply font-medium underline underline-offset-4 hover:no-underline;
+  }
+
+  /* Additional spacing and layout improvements */
+  .prose-article > *:first-child {
+    @apply mt-0;
+  }
+
+  .prose-article > *:last-child {
+    @apply mb-0;
   }
 }

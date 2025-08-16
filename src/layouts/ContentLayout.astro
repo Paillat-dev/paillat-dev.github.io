@@ -1,0 +1,12 @@
+---
+import Base from '@layouts/Base.astro';
+import BackButton from '@components/BackButton.svelte';
+const pageTitle = 'Home Page';
+---
+
+<Base pageTitle={pageTitle}>
+  <div class="my-24">
+    <BackButton client:load />
+    <slot />
+  </div>
+</Base>

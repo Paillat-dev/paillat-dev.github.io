@@ -1,20 +1,18 @@
 ---
-title: "Discord-emojis"
-description: " A Python tool that automatically fetches and extracts the latest emoji data from Discord. "
-techStack: ["Python", "FOSS"]
-githubSlug: "Paillat-dev/discord-emojis"
+title: 'Discord-emojis'
+description: 'A Python tool that automatically fetches and extracts the latest emoji data from Discord.'
+tags: ['Python', 'FOSS']
+githubSlug: 'Paillat-dev/discord-emojis'
 featured: true
-publishedAt: "2025-05-03"
+publishedAt: 2025-05-03
 ---
-
-# Discord-emojis
 
 Discord-emojis is a Python tool that automatically fetches and extracts the latest emoji data from Discord. It does so by retrieving the latest Discord build from the [Discord-Datamining](https://github.com/Discord-Datamining/Discord-Datamining) repository and extracting the latest emoji data from it.
 
 Since the Discord build is a javascript blob, it doesn't have the same Unicode limitations as bare JSON. This leads to issues when directly parsing the file because JSON doesn't support `\x` escape sequences, which are used in the Discord build to represent certain emojis.
 In order to parse the latter and correctly extract emoji data, I had to creatively make use of the `json5` library, as follows:
 
-- First, the extracted string is parsed with `json5`, which handles \x escape sequences correctly.
+- First, the extracted string is parsed with `json5`, which handles `\x` escape sequences correctly.
 - Then, the parsed dictionary is dumped back into a JSON string using the built-in python `json` library.
 - Finally, the dictionary is loaded back into a Python dictionary using the `json` library again, in order to correctly parse the UTF-16 surrogate pairs used in the Discord build.
 

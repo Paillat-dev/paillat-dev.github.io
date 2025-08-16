@@ -1,10 +1,27 @@
 ---
-import { type CollectionEntry } from "astro:content"
+import { type CollectionEntry } from 'astro:content';
+import ProjectCard from './ProjectCard.astro';
+
 interface Props {
   projects: CollectionEntry<'projects'>[];
 }
 
-const {projects}: Props = Astro.props;
+const { projects }: Props = Astro.props;
 
+const firstProject =
+  projects.find(project => project.data.image) || projects[0];
+const otherProjects = projects.filter(project => project !== firstProject);
 ---
 
+<div class="grid h-full w-full grid-cols-1 gap-4 md:grid-cols-2">
+  <ProjectCard
+    project={firstProject}
+    image={firstProject.data.image}
+    class="row-span-2"
+  />
+  {
+    otherProjects.map(project => (
+      <ProjectCard project={project} class="row-span-1" />
+    ))
+  }
+</div>

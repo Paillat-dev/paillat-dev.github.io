@@ -1,0 +1,62 @@
+---
+// index.astro
+import { getCollection } from 'astro:content';
+import ProjectFilter from '@components/ProjectFilter.svelte';
+import ProjectCard from '@components/ProjectCard.astro';
+import ContentLayout from '@layouts/ContentLayout.astro';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => {
+    const dateA = a.data.publishedAt ? new Date(a.data.publishedAt).getTime() : 0;
+    const dateB = b.data.publishedAt ? new Date(b.data.publishedAt).getTime() : 0;
+    return dateB - dateA;
+  }
+); //
+---
+
+<ContentLayout title="Projects">
+  <div class="flex flex-col gap-8">
+    <h2>All My Projects</h2>
+
+    <ProjectFilter {projects} client:load />
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
+      {
+        projects.map(project => (
+          <div
+            class="project-item"
+            data-tags={project.data.tags.join(',')}
+            data-archived={project.data.archived}
+            data-slug={project.slug}
+          >
+            <ProjectCard
+              project={project}
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</ContentLayout>
+
+<script>
+  import { filteredProjects } from '@stores/projectFilters.js';
+
+  // Subscribe to filter changes and update visibility
+
+  filteredProjects.subscribe((filtered: Array<{ slug: string }>) => {
+    const allProjectItems = document.querySelectorAll('.project-item');
+    const filteredSlugs = new Set(filtered.map(p => p.slug));
+
+    allProjectItems.forEach(item => {
+      const projectElement = item as HTMLElement;
+      const slug = projectElement.dataset.slug;
+
+      if (slug && filteredSlugs.has(slug)) {
+        projectElement.style.display = 'block';
+      } else {
+        projectElement.style.display = 'none';
+      }
+    });
+  });
+</script>
