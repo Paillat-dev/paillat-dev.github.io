@@ -1,0 +1,32 @@
+---
+title: "Dismoji"
+description: "A Python library for converting Discord emoji names to their Unicode equivalents and vice versa."
+techStack: ["Python", "FOSS"]
+githubSlug: "Paillat-dev/dismoji"
+featured: true
+publishedAt: "2025-05-04"
+---
+
+# Dismoji
+
+Dismoji is a very simple Python library I made that converts Discord emoji names to their Unicode equivalents and vice versa. It focuses specifically on Discord's own emoji naming and aliases, which can differ from standard Unicode emoji names.
+
+For example, the emoji name `:smile:` would be converted to its Unicode equivalent, while the Unicode character `😄` could be converted back to `:smile:`.
+
+It has an extremely simple API:
+
+```python
+import dismoji
+
+# Convert Discord emoji names to Unicode emojis
+text = "Hello, :wave: I'm excited! :partying_face:"
+converted_text = dismoji.emojize(text)
+print(converted_text)  # Output: "Hello, 👋 I'm excited! 🥳"
+
+# Convert Unicode emojis back to Discord emoji names
+emoji_text = "Hello, 👋 I'm excited! 🥳"
+named_text = dismoji.demojize(emoji_text)
+print(named_text)  # Output: "Hello, :wave: I'm excited! :partying_face:")
+```
+
+It makes use of another project of mine: [discord-emojis](/projects/discord-emojis) for emoji name resolution and is inspired by the [`emoji`](https://pypi.org/project/emoji/) library for API design, it uses
