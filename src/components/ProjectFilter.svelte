@@ -40,7 +40,6 @@
     };
   });
 
-  // Get all possible tags
   const possibleTags = [
     ...new Set(projects.flatMap(project => project.data.tags)),
   ];

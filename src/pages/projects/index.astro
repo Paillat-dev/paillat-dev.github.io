@@ -5,34 +5,34 @@ import ProjectFilter from '@components/ProjectFilter.svelte';
 import ProjectCard from '@components/ProjectCard.astro';
 import ContentLayout from '@layouts/ContentLayout.astro';
 
-const projects = (await getCollection('projects')).sort(
-  (a, b) => {
-    const dateA = a.data.publishedAt ? new Date(a.data.publishedAt).getTime() : 0;
-    const dateB = b.data.publishedAt ? new Date(b.data.publishedAt).getTime() : 0;
-    return dateB - dateA;
-  }
-); //
+const projects = (await getCollection('projects')).sort((a, b) => {
+  const dateA = a.data.publishedAt ? new Date(a.data.publishedAt).getTime() : 0;
+  const dateB = b.data.publishedAt ? new Date(b.data.publishedAt).getTime() : 0;
+  return dateB - dateA;
+}); //
 ---
 
 <ContentLayout title="Projects">
   <div class="flex flex-col gap-8">
-    <h2>All My Projects</h2>
-
+    <h2>Everything</h2>
+    <p class="text-muted-foreground">
+      Here you can find everything I have worked on.<br />
+      You can filter the projects by tags by selecting them below.
+    </p>
     <ProjectFilter {projects} client:load />
 
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
+    <div
+      class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    >
       {
         projects.map(project => (
-          <div
+          <ProjectCard
+            project={project}
             class="project-item"
             data-tags={project.data.tags.join(',')}
             data-archived={project.data.archived}
             data-slug={project.slug}
-          >
-            <ProjectCard
-              project={project}
-            />
-          </div>
+          />
         ))
       }
     </div>
@@ -41,8 +41,6 @@ const projects = (await getCollection('projects')).sort(
 
 <script>
   import { filteredProjects } from '@stores/projectFilters.js';
-
-  // Subscribe to filter changes and update visibility
 
   filteredProjects.subscribe((filtered: Array<{ slug: string }>) => {
     const allProjectItems = document.querySelectorAll('.project-item');
@@ -53,7 +51,7 @@ const projects = (await getCollection('projects')).sort(
       const slug = projectElement.dataset.slug;
 
       if (slug && filteredSlugs.has(slug)) {
-        projectElement.style.display = 'block';
+        projectElement.style.display = 'flex';
       } else {
         projectElement.style.display = 'none';
       }

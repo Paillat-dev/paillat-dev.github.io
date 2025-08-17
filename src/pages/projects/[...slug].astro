@@ -4,7 +4,7 @@ import ContentLayout from '@layouts/ContentLayout.astro';
 import { Badge } from '@lib/components/ui/badge';
 import badgeMap from '@lib/config/badgeMap';
 import { Button } from '@lib/components/ui/button';
-
+import { Github } from 'simple-icons-astro';
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
   return projects.map(project => ({
@@ -18,23 +18,38 @@ const { Content } = await project.render();
 ---
 
 <ContentLayout title={project.data.title}>
-  <main transition:name={`project-card-${project.slug}`} class="prose-article min-h-[80lvh]">
+  <main
+    transition:name={`project-card-${project.slug}`}
+    class="prose-article min-h-[80lvh]"
+  >
     <div>
-        <h2 transition:name={`project-title-${project.slug}`}>
-          {project.data.title}
-        </h2>
-<div>
-      {project.data.githubSlug && (
-        <Button variant="link" href={`https://github.com/${project.data.githubSlug}`} class="mx-0 px-0">
-          View on GitHub
-        </Button>
-      )}
-      {project.data.liveUrl && (
-        <Button variant="link" href={project.data.liveUrl} class="mx-0 px-0">
-          View Live Demo
-        </Button>
-      )}
-    </div>
+      <h2 transition:name={`project-title-${project.slug}`}>
+        {project.data.title}
+      </h2>
+      <div>
+        {
+          project.data.githubSlug && (
+            <Button
+              variant="link"
+              href={`https://github.com/${project.data.githubSlug}`}
+              class="mx-0 !p-0"
+            >
+              <Github />
+            </Button>
+          )
+        }
+        {
+          project.data.liveUrl && (
+            <Button
+              variant="link"
+              href={project.data.liveUrl}
+              class="mx-0 px-0"
+            >
+              View Live Demo
+            </Button>
+          )
+        }
+      </div>
       <div class="flex flex-row gap-1">
         {
           project.data.tags.map(tag => (

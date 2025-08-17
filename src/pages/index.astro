@@ -1,5 +1,5 @@
 ---
-import Base from '../layouts/Base.astro';
+import Base from '@layouts/Base.astro';
 import { Button } from '@lib/components/ui/button';
 import { getCollection } from 'astro:content';
 import ProjectsGrid from '@components/ProjectsGrid.astro';
@@ -9,7 +9,7 @@ const projects = await getCollection('projects');
 const featuredProjects = projects.filter(project => project.data.featured);
 ---
 
-<Base>
+<Base title="Paillat.dev">
   <section id="hero" class="flex h-[80lvh] flex-col justify-center gap-y-8">
     <div class="relative inline-flex flex-row font-extrabold">
       <h2>
@@ -17,7 +17,7 @@ const featuredProjects = projects.filter(project => project.data.featured);
         <span class="relative inline-block whitespace-nowrap">
           Jérémie
           <span
-            class="absolute bottom-0 left-0 translate-y-4 text-xl font-semibold italic opacity-70"
+            class="text-muted-foreground absolute bottom-0 left-0 translate-y-4 text-xl font-semibold italic"
             >aka Paillat</span
           >
         </span> 👋
@@ -30,8 +30,8 @@ const featuredProjects = projects.filter(project => project.data.featured);
   <section id="projects" class="flex flex-col gap-8">
     <h5>This is what I am currently working on:</h5>
     <ProjectsGrid projects={featuredProjects} />
-    <Button class="text-xl opacity-80" variant="link" href="/projects"
-      >View all my projects</Button
-    >
+    <Button class="m-0 p-0" variant="link" href="/projects"
+      ><h6 class="text-muted-foreground">View all my projects<h6></h6></h6>
+    </Button>
   </section>
 </Base>

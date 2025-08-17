@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 
 import path from 'path';
 
@@ -8,15 +8,55 @@ import mdx from '@astrojs/mdx';
 
 import tailwindcss from '@tailwindcss/vite';
 
-// https://astro.build/config
 export default defineConfig({
   integrations: [svelte(), mdx()],
+  experimental: {
+    fonts: [
+      {
+        provider: fontProviders.google(),
+        name: 'Geist Mono',
+        cssVariable: '--font-geist-mono',
+        fallbacks: ['monospace'],
+      },
+      {
+        provider: fontProviders.google(),
+        name: 'Geist',
+        cssVariable: '--font-geist',
+        fallbacks: ['sans-serif'],
+      },
+      {
+        provider: 'local',
+        name: 'Fluent Emoji Color',
+        cssVariable: '--font-fluent-emoji-color',
+        fallbacks: [
+          'Noto Color Emoji',
+          'Segoe UI Emoji',
+          'Segoe UI Symbol',
+          'Apple Color Emoji',
+        ],
+        variants: [
+          {
+            weight: 400,
+            style: 'normal',
+            src: ['./src/assets/fonts/FluentEmojiColor.ttf'],
+          },
+        ],
+      },
+    ],
+  },
 
   vite: {
     plugins: [tailwindcss()],
+    css: {
+      transformer: 'postcss',
+    },
     resolve: {
       alias: {
         '@lib': path.resolve('./src/lib'),
+        '@components': path.resolve('./src/components'),
+        '@layouts': path.resolve('./src/layouts'),
+        '@content': path.resolve('./src/content'),
+        '@stores': path.resolve('./src/stores'),
       },
     },
   },

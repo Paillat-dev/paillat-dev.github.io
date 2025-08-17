@@ -1,29 +1,34 @@
 ---
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
-const pageTitle = 'Home Page';
+import { twMerge } from 'tailwind-merge';
+import { Font } from 'astro:assets';
+import Footer from '@components/Footer.astro';
+
+export interface Props {
+  title: string;
+  class?: string;
+  [key: string]: any;
+}
+const { title, class: className = '', ...rest }: Props = Astro.props;
 ---
 
-<html lang="en"></html>
-
-<head>
-  <meta charset="utf-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="viewport" content="width=device-width" />
-  <meta name="generator" content={Astro.generator} />
-  <title>{pageTitle}</title>
-  <ClientRouter />
-</head>
-<body>
-  <div class="mx-24">
-    <slot />
-  </div>
-  <footer
-    class="flex flex-col items-center justify-center gap-4 py-32 text-center"
-  >
-    <p class="text-sm opacity-70">Made with ❤️</p>
-    <p class="text-sm opacity-70">
-      © 2025-{new Date().getFullYear()} Jérémie C.
-    </p>
-  </footer>
-</body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <Font cssVariable="--font-geist" preload />
+    <Font cssVariable="--font-fluent-emoji-color" preload />
+    <Font cssVariable="--font-geist-mono" preload />
+    <ClientRouter />
+  </head>
+  <body>
+    <div class={twMerge('mx-24', className)} {...rest}>
+      <slot />
+    </div>
+    <Footer />
+  </body>
+</html>

@@ -1,12 +1,18 @@
 ---
 import Base from '@layouts/Base.astro';
 import BackButton from '@components/BackButton.svelte';
-const pageTitle = 'Home Page';
+
+import { twMerge } from 'tailwind-merge';
+
+export interface Props {
+  title: string;
+  class?: string;
+  [key: string]: any;
+}
+const { title, class: className = '', ...rest }: Props = Astro.props;
 ---
 
-<Base pageTitle={pageTitle}>
-  <div class="my-24">
-    <BackButton client:load />
-    <slot />
-  </div>
+<Base title={title} class={twMerge('my-24', className)} {...rest}>
+  <BackButton client:load />
+  <slot />
 </Base>

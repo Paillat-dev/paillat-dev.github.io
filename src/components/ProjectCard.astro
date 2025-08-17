@@ -5,15 +5,22 @@ import { Image } from 'astro:assets';
 import { twMerge } from 'tailwind-merge';
 import { Button } from '@lib/components/ui/button';
 import { Badge } from '@lib/components/ui/badge';
+import { SiGithub } from '@icons-pack/svelte-simple-icons';
 import badgeMap from '@lib/config/badgeMap';
 
-interface Props {
+export interface Props {
   project: CollectionEntry<'projects'>;
   image?: ImageMetadata | null;
   class?: string;
+  [key: string]: any;
 }
 
-const { project, image = null, class: className = '' }: Props = Astro.props;
+const {
+  project,
+  image = null,
+  class: className = '',
+  ...rest
+}: Props = Astro.props;
 ---
 
 <div
@@ -22,6 +29,7 @@ const { project, image = null, class: className = '' }: Props = Astro.props;
     className
   )}
   transition:name={`project-card-${project.slug}`}
+  {...rest}
 >
   {image && <Image src={image} alt={project.data.title} />}
   <h4 transition:name={`project-title-${project.slug}`}>
@@ -39,10 +47,10 @@ const { project, image = null, class: className = '' }: Props = Astro.props;
       ))
     }
   </div>
-  <p transition:name={`project-description-${project.slug}`}>
+  <p transition:name={`project-description-${project.slug}`} class="h-max grow">
     {project.data.description}
   </p>
-  <div>
+  <div class="align-center flex flex-row">
     <Button variant="default" href={`/projects/${project.slug}`}
       >Read More</Button
     >
@@ -51,8 +59,9 @@ const { project, image = null, class: className = '' }: Props = Astro.props;
         <Button
           variant="link"
           href={`https://github.com/${project.data.githubSlug}`}
+          class=""
         >
-          View on GitHub
+          <SiGithub />
         </Button>
       )
     }
