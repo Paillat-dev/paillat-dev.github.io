@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import ContentLayout from '@layouts/ContentLayout.astro';
 import { Badge } from '@lib/components/ui/badge';
-import badgeMap from '@lib/config/badgeMap';
+import { badgesMap } from '@lib/config/badgesMap.ts';
 import { Button } from '@lib/components/ui/button';
 import { Github } from 'simple-icons-astro';
 export async function getStaticPaths() {
@@ -55,7 +55,7 @@ const { Content } = await project.render();
           project.data.tags.map(tag => (
             <Badge
               transition:name={`project-badge-${tag}-${project.slug}`}
-              {...(badgeMap[tag] || badgeMap['default'])}
+              {...(badgesMap[tag] || badgesMap['default'])}
             >
               {tag}
             </Badge>

@@ -13,6 +13,6 @@ const { title, class: className = '', ...rest }: Props = Astro.props;
 ---
 
 <Base title={title} class={twMerge('my-24', className)} {...rest}>
-  <BackButton client:load />
+  <BackButton />
   <slot />
 </Base>

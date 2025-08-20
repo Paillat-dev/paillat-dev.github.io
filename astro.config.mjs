@@ -17,12 +17,14 @@ export default defineConfig({
         name: 'Geist Mono',
         cssVariable: '--font-geist-mono',
         fallbacks: ['monospace'],
+        weights: ['100 900'],
       },
       {
         provider: fontProviders.google(),
         name: 'Geist',
         cssVariable: '--font-geist',
         fallbacks: ['sans-serif'],
+        weights: ['100 900'],
       },
       {
         provider: 'local',
@@ -48,7 +50,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     css: {
-      transformer: 'postcss',
+      transformer: 'lightningcss',
     },
     resolve: {
       alias: {

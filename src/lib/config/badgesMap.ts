@@ -1,6 +1,4 @@
-import { Type } from '@lucide/svelte';
-
-const badgeMap: Record<string, Record<string, string>> = {
+const badgesMap: Record<string, Record<string, string>> = {
   Archived: { class: 'border-yellow-300', variant: 'outline' },
   Python: { class: 'border-green-500', variant: 'outline' },
   default: { variant: 'outline' },
@@ -11,4 +9,4 @@ const badgeMap: Record<string, Record<string, string>> = {
   Discord: { class: 'border-[#5865F2]', variant: 'outline' },
 };
 
-export default badgeMap;
+export { badgesMap };

@@ -17,11 +17,14 @@ const { title, class: className = '', ...rest }: Props = Astro.props;
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <Font cssVariable="--font-geist" preload />
-    <Font cssVariable="--font-fluent-emoji-color" preload />
+    <Font cssVariable="--font-fluent-emoji-color" />
     <Font cssVariable="--font-geist-mono" preload />
     <ClientRouter />
   </head>

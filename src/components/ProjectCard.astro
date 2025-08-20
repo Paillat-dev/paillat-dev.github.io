@@ -6,7 +6,7 @@ import { twMerge } from 'tailwind-merge';
 import { Button } from '@lib/components/ui/button';
 import { Badge } from '@lib/components/ui/badge';
 import { SiGithub } from '@icons-pack/svelte-simple-icons';
-import badgeMap from '@lib/config/badgeMap';
+import { badgesMap } from '@lib/config/badgesMap.ts';
 
 export interface Props {
   project: CollectionEntry<'projects'>;
@@ -37,10 +37,10 @@ const {
   </h4>
   <div class="flex flex-row flex-wrap gap-1">
     {
-      project.data.tags.map(tag => (
+      [...project.data.languages, ...project.data.platforms, ...project.data.tags].map(tag => (
         <Badge
           transition:name={`project-badge-${tag}-${project.slug}`}
-          {...(badgeMap[tag] || badgeMap['default'])}
+          {...(badgesMap[tag] || badgesMap['default'])}
         >
           {tag}
         </Badge>

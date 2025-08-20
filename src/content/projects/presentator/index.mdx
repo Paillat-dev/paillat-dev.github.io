@@ -1,0 +1,21 @@
+---
+title: 'Presentator'
+description: 'A Discord bot that automatically generates full PowerPoint presentations on any topic using AI.'
+tags: ['AI']
+platforms: ['Discord']
+languages: ['Python']
+archived: true
+githubSlug: 'Paillat-dev/presentator'
+featured: false
+publishedAt: 2024-03-15
+---
+
+Presentator is one of my more ambitious Discord bot projects - it can generate complete PowerPoint presentations on literally any topic you throw at it. The idea came to me when I was procrastinating on creating slides for a school presentation and thought "wouldn't it be cool if AI could just do this for me?"
+
+The bot uses OpenAI's GPT-3 to generate comprehensive content about whatever subject you specify, then automatically formats it into a proper presentation using Marp (a markdown-to-presentation converter). What makes it really cool is that it doesn't just create text slides - it can also generate relevant images using either Stable Diffusion or DALL-E 2 to make the presentations visually engaging.
+
+The workflow is surprisingly smooth: you just use the `/present` command with your topic, and the bot handles everything else. It sends the topic to GPT-3, gets back structured content in Marp markdown format, extracts image requirements, generates those images, and finally compiles everything into both PDF and HTML versions of your presentation.
+
+I built it with Python using Pycord for the Discord integration, and it supports multiple image generation backends depending on whether you want to run Stable Diffusion locally (if you have a decent GPU) or use DALL-E 2 through the API. The `/list` and `/get` commands let you manage your generated presentations, which is handy since you might want to reference them later.
+
+It's been really useful for quickly creating presentation outlines or even complete slide decks when I need to explain complex topics. The AI does a surprisingly good job at structuring information logically and the image generation adds that professional touch that makes presentations actually engaging to look at.

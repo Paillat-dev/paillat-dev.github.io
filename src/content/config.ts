@@ -6,13 +6,15 @@ const projectsCollection = defineCollection({
     z.object({
       title: z.string(),
       description: z.string(),
-      tags: z.array(z.string()),
+      tags: z.array(z.string()).default([]),
+      languages: z.array(z.string()).default([]),
+      platforms: z.array(z.string()).default([]),
+      archived: z.boolean().default(false),
       githubSlug: z.string().optional(),
       liveUrl: z.string().optional(),
       featured: z.boolean().default(false),
       publishedAt: z.date().optional(),
       image: image().optional(),
-      archived: z.boolean().default(false),
     }),
 });
 

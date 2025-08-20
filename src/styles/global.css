@@ -120,7 +120,9 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --font-mono: var(--font-geist-mono), var(--font-fluent-emoji-color);
   --font-sans: var(--font-geist), var(--font-fluent-emoji-color);
-  --font-emoji: var(--font-fluent-emoji-color), 'Noto Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', sans-serif;
+  --font-emoji:
+    var(--font-fluent-emoji-color), 'Noto Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Apple Color Emoji', sans-serif;
   --text-sm: 0.707rem;
   --text-base: 1rem;
   --text-lg: 1.125rem;
@@ -130,17 +132,17 @@
   --text-4xl: 3.997rem;
   --text-5xl: 5.652rem;
   --text-6xl: 8.001rem;
-  --text-tiny: 300;
-  --text-normal: 400;
-  --text-medium: 500;
-  --text-semibold: 600;
-  --text-bold: 700;
-  --text-extrabold: 800;
+  --font-weight-tiny: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50 text-normal font-sans text-base;
+    @apply border-border outline-ring/50 font-sans text-base font-normal;
   }
   body {
     @apply bg-background text-foreground;
@@ -177,10 +179,12 @@
   h6 {
     @apply text-lg font-medium;
   }
+
   span {
     font-size: inherit;
     font-style: inherit;
     font-family: inherit;
+    font-weight: inherit;
   }
 }
 

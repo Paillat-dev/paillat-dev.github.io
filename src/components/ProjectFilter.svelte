@@ -1,7 +1,6 @@
 <!-- ProjectFilter.svelte - Only handles filter UI -->
 <script lang="ts">
   import { type CollectionEntry } from 'astro:content';
-  import { Select } from '@lib/components/ui/select';
   import { Label } from '@lib/components/ui/label';
   import { Checkbox } from '@lib/components/ui/checkbox';
   import Badge from '@lib/components/ui/badge/badge.svelte';
@@ -9,9 +8,14 @@
     selectedTags,
     showArchived,
     toggleTag,
+    toggleLanguage,
+    togglePlatform,
     setShowArchived,
     initializeProjects,
+    selectedPlatforms,
+    selectedLanguages,
   } from '../stores/projectFilters';
+  import { onMount } from 'svelte';
 
   interface Props {
     projects: CollectionEntry<'projects'>[];
@@ -19,24 +23,40 @@
 
   const { projects }: Props = $props();
 
-  $effect(() => {
-    initializeProjects(projects);
-  });
-
   let currentSelectedTags = $state(selectedTags.get());
+  let currentSelectedPlatforms = $state(selectedPlatforms.get());
+  let currentSelectedLanguages = $state(selectedLanguages.get());
   let currentShowArchived = $state(showArchived.get());
 
-  $effect(() => {
-    const unsubscribe1 = selectedTags.subscribe((tags: readonly string[]) => {
-      currentSelectedTags = [...tags];
-    });
-    const unsubscribe2 = showArchived.subscribe((archived: boolean) => {
-      currentShowArchived = archived;
-    });
+  onMount(() => {
+    initializeProjects(projects);
+
+    const unsubscribeSelectedTags = selectedTags.subscribe(
+      (tags: readonly string[]) => {
+        currentSelectedTags = [...tags];
+      }
+    );
+    const unsubscribeSelectedPlatforms = selectedPlatforms.subscribe(
+      (platforms: readonly string[]) => {
+        currentSelectedPlatforms = [...platforms];
+      }
+    );
+    const unsubscribeSelectedLanguages = selectedLanguages.subscribe(
+      (languages: readonly string[]) => {
+        currentSelectedLanguages = [...languages];
+      }
+    );
+    const unsubscribeShowArchived = showArchived.subscribe(
+      (archived: boolean) => {
+        currentShowArchived = archived;
+      }
+    );
 
     return () => {
-      unsubscribe1();
-      unsubscribe2();
+      unsubscribeSelectedTags();
+      unsubscribeSelectedPlatforms();
+      unsubscribeSelectedLanguages();
+      unsubscribeShowArchived();
     };
   });
 
@@ -44,10 +64,19 @@
     ...new Set(projects.flatMap(project => project.data.tags)),
   ];
 
-  function handleTagClick(tag: string) {
-    console.log('Tag clicked:', tag);
-    toggleTag(tag);
-  }
+  const possibleLanguages = [
+    ...new Set(projects.flatMap(project => project.data.languages)),
+  ];
+
+  const possiblePlatforms = [
+    ...new Set(projects.flatMap(project => project.data.platforms)),
+  ];
+
+  const getTagsMap = () => [
+    [null, possibleTags, toggleTag, () => currentSelectedTags],
+    ['Languages', possibleLanguages, toggleLanguage, () => currentSelectedLanguages],
+    ['Platforms', possiblePlatforms, togglePlatform, () => currentSelectedPlatforms],
+  ];
 
   function handleArchivedChange(checked: boolean) {
     setShowArchived(checked);
@@ -55,15 +84,20 @@
 </script>
 
 <div class="flex flex-col gap-4">
-  <div class="flex flex-row flex-wrap gap-2">
-    {#each possibleTags as tag}
-      <Badge
-        variant={currentSelectedTags.includes(tag) ? 'default' : 'outline'}
-        onclick={() => handleTagClick(tag)}
-        class="hover:cursor-pointer"
-      >
-        {tag}
-      </Badge>
+  <div class="flex flex-col gap-2">
+    {#each getTagsMap() as [type, tags, callback, getCurrentSelected] (tags)}
+      <div class="flex flex-row flex-wrap gap-2">
+        {#if type}<Label class="font-semibold">{type}:</Label>{/if}
+        {#each tags as tag (tag)}
+          <Badge
+            variant={getCurrentSelected().includes(tag) ? 'default' : 'outline'}
+            onclick={() => callback(tag)}
+            class="hover:cursor-pointer"
+          >
+            {tag}
+          </Badge>
+        {/each}
+      </div>
     {/each}
   </div>
 
