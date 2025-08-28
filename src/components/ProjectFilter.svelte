@@ -74,8 +74,18 @@
 
   const getTagsMap = () => [
     [null, possibleTags, toggleTag, () => currentSelectedTags],
-    ['Languages', possibleLanguages, toggleLanguage, () => currentSelectedLanguages],
-    ['Platforms', possiblePlatforms, togglePlatform, () => currentSelectedPlatforms],
+    [
+      'Languages',
+      possibleLanguages,
+      toggleLanguage,
+      () => currentSelectedLanguages,
+    ],
+    [
+      'Platforms',
+      possiblePlatforms,
+      togglePlatform,
+      () => currentSelectedPlatforms,
+    ],
   ];
 
   function handleArchivedChange(checked: boolean) {

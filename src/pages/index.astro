@@ -3,6 +3,8 @@ import Base from '@layouts/Base.astro';
 import { Button } from '@lib/components/ui/button';
 import { getCollection } from 'astro:content';
 import ProjectsGrid from '@components/ProjectsGrid.astro';
+import { Github } from 'simple-icons-astro';
+import {GitHubCalendar} from 'svelte-github-calendar';
 
 const projects = await getCollection('projects');
 
@@ -10,21 +12,27 @@ const featuredProjects = projects.filter(project => project.data.featured);
 ---
 
 <Base title="Paillat.dev">
-  <section id="hero" class="flex h-[80lvh] flex-col justify-center gap-y-8">
-    <div class="relative inline-flex flex-row font-extrabold">
-      <h2>
-        Hey, I'm
-        <span class="relative inline-block whitespace-nowrap">
-          Jérémie
-          <span
-            class="text-muted-foreground absolute bottom-0 left-0 translate-y-4 text-xl font-semibold italic"
-            >aka Paillat</span
-          >
-        </span> 👋
-      </h2>
-    </div>
-    <div>
+  <section
+    id="hero"
+    class="grid h-[80lvh] grid-cols-1 gap-8 gap-x-8 md:grid-cols-2"
+  >
+    <div class="flex flex-col justify-center gap-y-8">
+      <div class="relative inline-flex flex-row font-extrabold">
+        <h2>
+          Hey, I'm
+          <span class="relative inline-block whitespace-nowrap">
+            Jérémie
+            <span
+              class="text-muted-foreground absolute bottom-0 left-0 translate-y-4 text-xl font-semibold italic"
+              >aka Paillat</span
+            >
+          </span> 👋
+        </h2>
+      </div>
       <h5>A (wannabe) software engineer from Switzerland 🇨🇭</h5>
+      <div class="flex flex-row gap-2">
+        <a href="https://github.com/Paillat-dev"><Github /></a>
+      </div>
     </div>
   </section>
   <section id="projects" class="flex flex-col gap-8">
@@ -33,5 +41,8 @@ const featuredProjects = projects.filter(project => project.data.featured);
     <Button class="m-0 p-0" variant="link" href="/projects"
       ><h6 class="text-muted-foreground">View all my projects<h6></h6></h6>
     </Button>
+  </section>
+  <section id="gh-graph" class="flex flex-col gap-8 min-h-2/3">
+    <GitHubCalendar client:only="svelte" username="Paillat-dev" class="text-primary min-w-fit w-content px-4"/>
   </section>
 </Base>
