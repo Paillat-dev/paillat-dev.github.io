@@ -18,7 +18,7 @@
     "@icons-pack/svelte-simple-icons": "^6.4.0",
     "@lucide/astro": "^0.539.0",
     "@tailwindcss/vite": "^4.1.12",
-    "astro": "^5.13.4",
+    "astro": "^5.15.6",
     "nanostores": "^1.0.1",
     "sharp": "^0.34.3",
     "simple-icons-astro": "^15.12.0",
