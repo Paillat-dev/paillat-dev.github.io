@@ -55,7 +55,7 @@
     "remark-preset-lint-recommended": "^7.0.1",
     "sharp": "^0.34.5",
     "simple-icons-astro": "^16.1.0",
-    "svelte": "^5.50.0",
+    "svelte": "^5.51.5",
     "svelte-check": "^4.3.6",
     "svelte-eslint-parser": "^1.4.1",
     "svelte-github-calendar": "0.1.0-alpha.5",
