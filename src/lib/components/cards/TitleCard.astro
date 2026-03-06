@@ -11,7 +11,10 @@ const { width, class: className = "" }: Props = Astro.props;
 ---
 
 <BentoCard
-  class={cn("justify-end overflow-hidden text-base font-bold border-none shadow-none", className)}
+  class={cn(
+    "justify-end overflow-hidden text-base font-bold border-none shadow-none bg-transparent",
+    className
+  )}
   width={width}
   height={1}
 >

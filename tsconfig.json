@@ -1,7 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
+  "exclude": ["dist", "src/lib/components/ui"],
   "compilerOptions": {
     "types": ["vite/client", "astro/client", "svelte"],
     "baseUrl": ".",

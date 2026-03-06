@@ -1,0 +1,23 @@
+---
+import { Image } from "astro:assets";
+import Avatar from "$src/assets/pfp.jpg";
+import { cn } from "$lib/utils.ts";
+import ThemeSwitcher from "src/lib/components/ThemeSwitcher.svelte";
+
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props as Props;
+---
+
+<section class={cn("flex flex-col gap-y-4", className)}>
+  <Image
+    src={Avatar}
+    alt="Profile picture"
+    class="border-muted large:size-20 size-16 rounded-full border-2"
+  />
+  <div class="flex flex-row items-center justify-between">
+    <h1 class="text-xl font-extrabold">Paillat</h1>
+    <ThemeSwitcher client:load />
+  </div>
+</section>

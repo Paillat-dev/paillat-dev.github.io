@@ -1,0 +1,34 @@
+---
+import Profile from "$lib/components/Profile.astro";
+import SmallProfile from "$lib/components/SmallProfile.astro";
+import { cn } from "$lib/utils.ts";
+
+interface Props {
+  class?: string;
+  slotContainerClass?: string;
+}
+
+const { class: className = "", slotContainerClass = "" }: Props = Astro.props;
+---
+
+<main class={cn("mx-auto w-screen max-w-[1600px] p-4 large:p-10", className)}>
+  <div
+    class="large:flex-row large:items-start large:justify-between flex grow flex-col items-center gap-y-8"
+  >
+    <Profile
+      class={cn(
+        "max-w-2card large:sticky large:top-10 large:w-1/3 large:px-0 static top-0 w-full shrink-0 px-8",
+        Astro.url.pathname === "/" ? "" : "hidden large:flex"
+      )}
+    />
+    <div
+      class={cn(
+        "max-w-2card large:max-w-none large:w-4card large:h-full large:min-h-0 flex w-full flex-col gap-y-2",
+        slotContainerClass
+      )}
+    >
+      <SmallProfile class={cn(Astro.url.pathname === "/" ? "hidden" : "flex large:hidden")} />
+      <slot />
+    </div>
+  </div>
+</main>

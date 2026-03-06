@@ -1,0 +1,80 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "$src/layouts/Layout.astro";
+import LeftProfileLayout from "$lib/components/LeftProfileLayout.astro";
+import SimpleBreadcrumb from "$lib/components/SimpleBreadcrumb.svelte";
+import { Image } from "astro:assets";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+const ogImages = {
+  light: `/og/light/${post.id}.png`,
+  dark: `/og/dark/${post.id}.png`,
+};
+const { Content } = await render(post);
+---
+
+<Layout title={post.data.title} description={post.data.description} image={ogImages["light"]}>
+  <LeftProfileLayout class="min-h-screen">
+    <SimpleBreadcrumb
+      pages={[
+        { label: "Home", href: "/" },
+        { label: "Blog", href: "/post" },
+        { label: post.data.title, disabled: true },
+      ]}
+    />
+    <article class="prose prose-neutral dark:prose-invert max-w-none">
+      <div class="not-prose relative mb-6 aspect-[40/21] w-full overflow-hidden rounded-lg">
+        <Image
+          src={ogImages["light"]}
+          alt={`OG image for ${post.data.title}`}
+          class="rounded-lg dark:hidden"
+          width={1200}
+          height={630}
+        />
+        <Image
+          src={ogImages["dark"]}
+          alt={`OG image for ${post.data.title}`}
+          class="hidden rounded-lg dark:block"
+          width={1200}
+          height={630}
+        />
+      </div>
+      <p class="lead">{post.data.description}</p>
+      <time
+        class="text-muted-foreground not-prose text-sm"
+        datetime={post.data.pubDate.toISOString()}
+      >
+        {
+          post.data.pubDate.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
+        }
+        {
+          post.data.updatedDate && (
+            <span>
+              {" "}
+              &middot; Updated{" "}
+              {post.data.updatedDate.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </span>
+          )
+        }
+      </time>
+      <Content />
+    </article>
+  </LeftProfileLayout>
+</Layout>

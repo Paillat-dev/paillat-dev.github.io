@@ -10,7 +10,8 @@ interface Props {
   sub: string;
   icon?: AstroComponentFactory;
   href: string;
-  brandColor: string;
+  newPage?: boolean;
+  brandColor?: string;
   iconClass?: string;
 }
 
@@ -22,6 +23,7 @@ const {
   title,
   sub,
   href,
+  newPage,
   brandColor,
   iconClass,
 }: Props = Astro.props;
@@ -31,6 +33,7 @@ const {
   width={width}
   height={height}
   href={href}
+  newPage={newPage}
   brandColor={brandColor}
   class={cn("justify-start", className)}
   iconClass={iconClass}
@@ -38,8 +41,8 @@ const {
   {Icon ? <Icon slot="icon" /> : <slot name="icon" slot="icon" />}
 
   <div class="flex flex-col">
-    <h2 class="text-xs">{title}</h2>
-    <p class="text-muted-foreground text-xs">{sub}</p>
+    <h2 class="text-base">{title}</h2>
+    <p class="text-muted-foreground text-sm">{sub}</p>
   </div>
   <slot />
 </BentoCard>

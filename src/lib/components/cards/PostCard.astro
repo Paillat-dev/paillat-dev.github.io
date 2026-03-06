@@ -1,0 +1,37 @@
+---
+import EasyTextCard from "$lib/components/cards/EasyTextCard.astro";
+import { Book } from "@lucide/svelte";
+import type { CollectionEntry } from "astro:content";
+import * as lucide from "@lucide/svelte";
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+
+type Props = {
+  post: CollectionEntry<"blog">;
+};
+
+const { post } = Astro.props as Props;
+
+const icons = lucide as unknown as Record<string, AstroComponentFactory>;
+const Icon = post.data.icon ? icons[post.data.icon] : null;
+---
+
+<EasyTextCard
+  width={2}
+  height={1}
+  href={`/post/${post.id}`}
+  newPage={false}
+  title={post.data.title}
+  sub={post.data.description}
+  brandColor="#000000"
+  icon={Icon ?? Book}
+>
+  <div class="mt-auto">
+    {
+      (post.data.updatedDate ?? post.data.pubDate).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    }
+  </div>
+</EasyTextCard>

@@ -1,18 +1,192 @@
 ---
-import Profile from "$lib/components/Profile.astro";
 import Layout from "$src/layouts/Layout.astro";
-import BentoCards from "$lib/components/BentoCards.astro";
+import LeftProfileLayout from "$lib/components/LeftProfileLayout.astro";
+import BentoCard from "$lib/components/cards/BentoCard.astro";
+import GithubCard from "$lib/components/cards/GithubCard.astro";
+import { Image } from "astro:assets";
+import EasyTextCard from "$lib/components/cards/EasyTextCard.astro";
+import TitleCard from "$lib/components/cards/TitleCard.astro";
+import KPDH from "$src/assets/kpdh.webp";
+import LinkedIn from "$src/assets/LI-In-Bug.png";
+import NiceBots from "$src/assets/nicebots.png";
+import Pycord from "$src/assets/pycord-logo-solid-256.png";
+import {
+  Printables,
+  Svelte,
+  Github,
+  Discord,
+  Shadcnui,
+  Tailwindcss,
+  Astral,
+} from "simple-icons-astro";
+import { Scale } from "@lucide/svelte";
+import BentoCards from "$lib/components/cards/BentoCards.astro";
+import { getCollection } from "astro:content";
+import PostCard from "$lib/components/cards/PostCard.astro";
+
+const lastPost = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+)[0];
 ---
 
 <Layout>
-  <main class="mx-auto w-screen max-w-[1440px] p-4 lg:p-10">
-    <div
-      class="flex grow flex-col items-center gap-y-8 lg:flex-row lg:items-start lg:justify-between"
-    >
-      <Profile
-        class="max-w-2card static top-0 w-full shrink-0 px-8 lg:sticky lg:top-10 lg:w-1/3 lg:px-0"
+  <LeftProfileLayout slotContainerClass="large:mx-0 -mx-4 w-full shrink-0">
+    <BentoCards class="large:-mt-2">
+      <GithubCard />
+      <BentoCard width={2} height={1} class="items-center justify-center p-0">
+        <Image src={KPDH} alt="KPOP Demon Hunters Poster" />
+      </BentoCard>
+      <BentoCard width={2} height={1}>
+        <blockquote>
+          “If we were unable to distinguish between them, then the only lives worthy of respect
+          would be those that resemble our own—an assertion of narcissism, supremacy, and cultural
+          arrogance that rejects any ethical encounter with difference.”
+        </blockquote>
+      </BentoCard>
+      <PostCard post={lastPost} />
+
+      <EasyTextCard
+        width={1}
+        height={1}
+        brandColor="#5865f2"
+        icon={Discord}
+        href="https://discord.com/users/707196665668436019"
+        title="@paillat"
+        sub="Discord"
       />
-      <BentoCards class="max-w-2card lg:w-4card -mx-4 w-full shrink-0 lg:mx-0 lg:max-w-none" />
-    </div>
-  </main>
+      <EasyTextCard
+        width={1}
+        height={1}
+        brandColor="#2868b2"
+        href="https://www.linkedin.com/in/paillat-dev/"
+        title="Jérémie C."
+        sub="LinkedIn"
+      >
+        <Image src={LinkedIn} alt="LinkedIn Logo" slot="icon" class="bg-transparent" />
+      </EasyTextCard>
+      <TitleCard width={4}> Misc Projects / Portfolio </TitleCard>
+      <EasyTextCard
+        width={2}
+        height={1}
+        href="https://pycord.dev/about"
+        title="Pycord-Development, my main occupation currently"
+        sub="Project Manager and Maintainer of the Discord API Wrapper for Python, Pycord."
+        brandColor="#ffffff"
+      >
+        <Image src={Pycord} alt="Pycord Logo" slot="icon" class="bg-transparent" />
+      </EasyTextCard>
+      <EasyTextCard
+        width={1}
+        height={1}
+        href="https://nicebots.xyz/"
+        title="NiceBots.xyz"
+        sub='My biggest side "project".'
+      >
+        <Image src={NiceBots} alt="NiceBots Logo" slot="icon" class="bg-transparent" />
+      </EasyTextCard>
+      <EasyTextCard
+        width={1}
+        height={1}
+        href="https://www.printables.com/@paillat"
+        title="(Some of) My 3d Models"
+        sub="prinables.com"
+        brandColor="#fa682d"
+        icon={Printables}
+      />
+      <EasyTextCard
+        width={2}
+        height={1}
+        href="https://github.com/Paillat-dev/saferaise"
+        title="Saferaise"
+        sub="Checked exceptions for Python. Declare what your functions raise, and let saferaise enforce it - using your existing try/except blocks."
+        icon={Github}
+        brandColor="#000000"
+      />
+      <EasyTextCard
+        width={2}
+        height={1}
+        href="https://discordcn.dev"
+        title="DiscordCN"
+        sub=" An unofficial, community-driven inspirational reference for Discord app interface patterns. Built with Astro, Svelte, TailwindCSS and lots of time."
+        icon={Github}
+        brandColor="#000000"
+      />
+      <EasyTextCard
+        width={1}
+        height={1}
+        href="https://github.com/ItsDrike/code-jam-2024"
+        title="Python Discord Code Jam 11"
+        sub="Went top 10 with our team!"
+        icon={Github}
+        brandColor="#000000"
+      />
+      <EasyTextCard
+        width={1}
+        height={1}
+        href="https://mediationcorner.ch/"
+        title="Mediationcorner"
+        sub="A commissioned website. Built with Astro, Svelte and TailwindCSS."
+        icon={Scale}
+        iconClass="text-foreground"
+        brandColor="transparent"
+      />
+      <EasyTextCard
+        width={1}
+        height={1}
+        href="https://www.github.com/Paillat-dev/paillat-dev.github.io"
+        title="This Website !"
+        sub="Built with Astro, Svelte and TailwindCSS."
+        brandColor="#000000"
+        icon={Github}
+      />
+      <EasyTextCard
+        width={1}
+        height={1}
+        href="https://github.com/Paillat-dev/svelte-github-calendar/"
+        title="svelte-github-calendar"
+        sub="Used above to display my activity."
+        brandColor="#000000"
+        icon={Github}
+      />
+      <TitleCard width={4}> Tools and Tech I use </TitleCard>
+      <EasyTextCard
+        width={1}
+        height={1}
+        href="https://www.printables.com/@paillat"
+        title="Svelte"
+        sub="svelte.dev"
+        brandColor="#ff3d00"
+        icon={Svelte}
+      />
+      <EasyTextCard
+        width={1}
+        height={1}
+        href="https://www.shadcn-svelte.com/"
+        title="shadcn-svelte"
+        sub="shadcn-svelte.com"
+        brandColor="#000000"
+        icon={Shadcnui}
+        iconClass="text-[#ff3d00]"
+      />
+      <EasyTextCard
+        width={1}
+        height={1}
+        href="https://tailwindcss.com/"
+        title="TailwindCSS"
+        sub="tailwindcss.com"
+        icon={Tailwindcss}
+        iconClass="text-[#34bdf7]"
+      />
+      <EasyTextCard
+        width={1}
+        height={1}
+        href="https://astral.sh/"
+        title="ruff, ty, uv by Astral"
+        sub="astral.sh"
+        brandColor="#30173d"
+        icon={Astral}
+        iconClass="text-[#d7ff64] p-0"
+      />
+    </BentoCards>
+  </LeftProfileLayout>
 </Layout>
