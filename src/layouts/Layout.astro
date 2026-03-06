@@ -1,6 +1,7 @@
 ---
 import Seo from "$lib/components/Seo.astro";
 import "$src/styles/global.css";
+import BuyMeACoffee from "$lib/components/BuyMeACoffee.astro";
 const { title, description } = Astro.props;
 const year = new Date().getFullYear();
 ---
@@ -12,6 +13,7 @@ const year = new Date().getFullYear();
     <meta name="generator" content={Astro.generator} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <BuyMeACoffee />
 
     <Seo title={title} description={description} />
 
