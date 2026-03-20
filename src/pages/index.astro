@@ -10,14 +10,7 @@ import KPDH from "$src/assets/kpdh.webp";
 import LinkedIn from "$src/assets/LI-In-Bug.png";
 import NiceBots from "$src/assets/nicebots.png";
 import Pycord from "$src/assets/pycord-logo-solid-256.png";
-import {
-  Printables,
-  Svelte,
-  Github,
-  Discord,
-  Shadcnui,
-  Tailwindcss
-} from "simple-icons-astro";
+import { Printables, Svelte, Github, Discord, Shadcnui, Tailwindcss } from "simple-icons-astro";
 import { Scale, Egg } from "@lucide/svelte";
 import BentoCards from "$lib/components/cards/BentoCards.astro";
 import { getCollection } from "astro:content";
@@ -184,8 +177,8 @@ const lastPost = (await getCollection("blog")).sort(
         sub="hatch.pypa.io"
         brandColor="#4051b5"
       >
-      <Egg slot="icon" fill="#ffffff" />
-    </EasyTextCard>
+        <Egg slot="icon" fill="#ffffff" />
+      </EasyTextCard>
     </BentoCards>
   </LeftProfileLayout>
 </Layout>
