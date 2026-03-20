@@ -16,10 +16,9 @@ import {
   Github,
   Discord,
   Shadcnui,
-  Tailwindcss,
-  Astral,
+  Tailwindcss
 } from "simple-icons-astro";
-import { Scale } from "@lucide/svelte";
+import { Scale, Egg } from "@lucide/svelte";
 import BentoCards from "$lib/components/cards/BentoCards.astro";
 import { getCollection } from "astro:content";
 import PostCard from "$lib/components/cards/PostCard.astro";
@@ -180,13 +179,13 @@ const lastPost = (await getCollection("blog")).sort(
       <EasyTextCard
         width={1}
         height={1}
-        href="https://astral.sh/"
-        title="ruff, ty, uv by Astral"
-        sub="astral.sh"
-        brandColor="#30173d"
-        icon={Astral}
-        iconClass="text-[#d7ff64] p-0"
-      />
+        href="https://hatch.pypa.io"
+        title="Hatch"
+        sub="hatch.pypa.io"
+        brandColor="#4051b5"
+      >
+      <Egg slot="icon" fill="#ffffff" />
+    </EasyTextCard>
     </BentoCards>
   </LeftProfileLayout>
 </Layout>
