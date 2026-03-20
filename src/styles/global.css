@@ -40,7 +40,7 @@
   --sidebar-accent-foreground: light-dark(oklch(0.216 0.006 56.043), oklch(0.985 0.001 106.423));
   --sidebar-border: light-dark(oklch(0.923 0.003 48.717), oklch(1 0 0 / 10%));
   --sidebar-ring: light-dark(oklch(0.709 0.01 56.259), oklch(0.553 0.013 58.071));
-  --card-width: 14rem;
+  --card-width: 13rem;
 }
 
 html.dark {
@@ -97,8 +97,9 @@ html.light {
   --text-xxs: 0.625rem;
   --text-xxxs: 0.5rem;
   --font-sans: "TASA Orbiter", system-ui, sans-serif;
-  --breakpoint-large: 91.5rem; /* calc(var(--card-width) * 2 + var(--card-width) * 4 + var(--spacing) * 10 * 3) */
+  --breakpoint-large: 85.5rem; /* calc(var(--card-width) * 2 + var(--card-width) * 4 + var(--spacing) * 10 * 3) */
 }
+
 @custom-variant dark (&:where(.dark, .dark *));
 @layer base {
   * {
