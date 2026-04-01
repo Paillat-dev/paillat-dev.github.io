@@ -31,7 +31,7 @@
     "@fontsource-variable/tasa-orbiter": "^5.2.2",
     "@fontsource/tasa-orbiter": "^5.2.2",
     "@internationalized/date": "^3.10.0",
-    "@lucide/svelte": "^0.561.0",
+    "@lucide/svelte": "^0.577.0",
     "@napi-rs/canvas": "^0.1.96",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.18",
