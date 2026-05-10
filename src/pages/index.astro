@@ -20,55 +20,77 @@ const lastPost = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 )[0];
 
-const quotes: [string, string, string][] = [
-  [
-    "The idea that being exposed to an idea is enough to be indoctrinated by it assumes a seamless and quick passage from thought to conviction, bypassing all judgment and evaluation.",
-    "Judith Butler",
-    "Who's Afraid of Gender ?",
-  ],
-  [
-    "[...] the contradiction itself is what works, in effect “emancipating” people from the task of developing a rational position, a pathway to fascism.",
-    "Judith Butler",
-    "Who's Afraid of Gender ?",
-  ],
-  [
-    "Informed public debate becomes impossible when some parties refuse to read the material under dispute.",
-    "Judith Butler",
-    "Who's Afraid of Gender ?",
-  ],
-  [
-    '"People are turning into machines, [...]. And no doubt sometimes they become perfect machines. But I do not believe they can think. If they tried to think, they could not have been such fine machines."',
-    "Pyotr Demyanovich Uspensky",
-    "In Search of the Miraculous",
-  ],
-  [
-    "The opposition to gender, along with the defense of the family (against any challenge to its heteronormativity) and the nation (against any challenge to its racial purity), is linked with a eugenics that belongs to the history and present of fascism.",
-    "Judith Butler",
-    "Who's Afraid of Gender ?",
-  ],
-  [
-    "And if the central religious image was a woman giving birth and not, as in our time, a man dying on a cross, it would not be unreasonable to infer that life and the love of life rather than death and the fear of death—were dominant in society as well as art.",
-    "Riane Eisler",
-    "The Chalice and the Blade",
-  ],
-  [
-    "If we were not capable of such a distinction, then the only dignified lives would be those that mirrored our own—an assertion of narcissism, supremacy, and cultural arrogance that refuses the ethical encounter with difference.",
-    "Judith Butler",
-    "Who's Afraid of Gender ?",
-  ],
+type QuoteEntry = {
+  text: string;
+  author: string;
+  noteTitle: string;
+  notePublication: string;
+  noteEdition?: string;
+};
+
+const quotes: QuoteEntry[] = [
+  {
+    text: "The idea that being exposed to an idea is enough to be indoctrinated by it assumes a seamless and quick passage from thought to conviction, bypassing all judgment and evaluation.",
+    author: "Judith Butler",
+    noteTitle: "Who's Afraid of Gender?",
+    notePublication: "New York: Farrar, Straus and Giroux, 2024",
+  },
+  {
+    text: '[...] the contradiction itself is what works, in effect "emancipating" people from the task of developing a rational position, a pathway to fascism.',
+    author: "Judith Butler",
+    noteTitle: "Who's Afraid of Gender?",
+    notePublication: "New York: Farrar, Straus and Giroux, 2024",
+  },
+  {
+    text: "Informed public debate becomes impossible when some parties refuse to read the material under dispute.",
+    author: "Judith Butler",
+    noteTitle: "Who's Afraid of Gender?",
+    notePublication: "New York: Farrar, Straus and Giroux, 2024",
+  },
+  {
+    text: '"People are turning into machines, [...]. And no doubt sometimes they become perfect machines. But I do not believe they can think. If they tried to think, they could not have been such fine machines."',
+    author: "Pyotr Demyanovich Uspensky",
+    noteTitle: "In Search of the Miraculous: Fragments of an Unknown Teaching",
+    notePublication: "New York: Harcourt, Brace & Company, 1949",
+  },
+  {
+    text: "The opposition to gender, along with the defense of the family (against any challenge to its heteronormativity) and the nation (against any challenge to its racial purity), is linked with a eugenics that belongs to the history and present of fascism.",
+    author: "Judith Butler",
+    noteTitle: "Who's Afraid of Gender?",
+    notePublication: "New York: Farrar, Straus and Giroux, 2024",
+  },
+  {
+    text: "And if the central religious image was a woman giving birth and not, as in our time, a man dying on a cross, it would not be unreasonable to infer that life and the love of life rather than death and the fear of death-were dominant in society as well as art.",
+    author: "Riane Eisler",
+    noteTitle: "The Chalice and the Blade: Our History, Our Future",
+    notePublication: "New York: HarperCollins, 1988",
+  },
+  {
+    text: "If we were not capable of such a distinction, then the only dignified lives would be those that mirrored our own-an assertion of narcissism, supremacy, and cultural arrogance that refuses the ethical encounter with difference.",
+    author: "Judith Butler",
+    noteTitle: "Who's Afraid of Gender?",
+    notePublication: "New York: Farrar, Straus and Giroux, 2024",
+  },
 ];
 
-const noscriptQuote: [string, string, string] = quotes[Math.floor(Math.random() * quotes.length)];
+const noscriptQuote = quotes[Math.floor(Math.random() * quotes.length)];
 ---
 
 <script define:vars={{ quotes }}>
+  function getFullNote(quote) {
+    const editionPart = quote.noteEdition ? `, ${quote.noteEdition}` : "";
+    return `${quote.author}, <em>${quote.noteTitle}</em>${editionPart} (${quote.notePublication}).`;
+  }
+
   function setRandomQuote() {
     const quoteBody = document.getElementById("quote-body");
     const quoteAuthor = document.getElementById("quote-author");
-    if (!quoteBody || !quoteAuthor) return;
+    const quoteNote = document.getElementById("quote-note");
+    if (!quoteBody || !quoteAuthor || !quoteNote) return;
     const currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    quoteBody.innerHTML = currentQuote[0];
-    quoteAuthor.innerHTML = `— ${currentQuote[1]} • ${currentQuote[2]}`;
+    quoteBody.innerHTML = currentQuote.text;
+    quoteAuthor.innerHTML = `— ${currentQuote.author}<sup>1</sup>`;
+    quoteNote.innerHTML = `<sup>1</sup> ${getFullNote(currentQuote)}`;
   }
 
   document.addEventListener("astro:page-load", setRandomQuote);
@@ -81,19 +103,29 @@ const noscriptQuote: [string, string, string] = quotes[Math.floor(Math.random() 
         <Image src={KPDH} alt="KPOP Demon Hunters Poster" />
       </BentoCard>-->
       <BentoCard width={2} height={2}>
-        <blockquote
-          id="quote-body"
-          class="border-muted-foreground border-l-2 pl-2 text-justify text-base"
-        >
+        <div>
+          <blockquote
+            id="quote-body"
+            class="border-muted-foreground border-l-2 pl-2 text-justify text-base"
+          >
+            <noscript>
+              {noscriptQuote.text}
+            </noscript>
+          </blockquote>
+          <span id="quote-author" class="text-muted-foreground text-sm">
+            <noscript>
+              — {noscriptQuote.author}<sup>1</sup>
+            </noscript>
+          </span>
+        </div>
+        <p id="quote-note" class="text-muted-foreground mt-1 text-xs leading-relaxed">
           <noscript>
-            {noscriptQuote[0]}
+            <sup>1</sup>
+            {noscriptQuote.author}, <em>{noscriptQuote.noteTitle}</em>{
+              noscriptQuote.noteEdition ? `, ${noscriptQuote.noteEdition}` : ""
+            } ({noscriptQuote.notePublication}).
           </noscript>
-        </blockquote>
-        <span id="quote-author" class="text-muted-foreground text-sm">
-          <noscript>
-            — {noscriptQuote[1]} • {noscriptQuote[2]}
-          </noscript>
-        </span>
+        </p>
       </BentoCard>
       <PostCard post={lastPost} />
 
