@@ -19,21 +19,81 @@ import PostCard from "$lib/components/cards/PostCard.astro";
 const lastPost = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 )[0];
+
+const quotes: [string, string, string][] = [
+  [
+    "The idea that being exposed to an idea is enough to be indoctrinated by it assumes a seamless and quick passage from thought to conviction, bypassing all judgment and evaluation.",
+    "Judith Butler",
+    "Who's Afraid of Gender ?",
+  ],
+  [
+    "[...] the contradiction itself is what works, in effect “emancipating” people from the task of developing a rational position, a pathway to fascism.",
+    "Judith Butler",
+    "Who's Afraid of Gender ?",
+  ],
+  [
+    "Informed public debate becomes impossible when some parties refuse to read the material under dispute.",
+    "Judith Butler",
+    "Who's Afraid of Gender ?",
+  ],
+  [
+    'People are turning into machines, [...]. And no doubt sometimes they become perfect machines. But I do not believe they can think. If they tried to think, they could not have been such fine machines."',
+    "Pyotr Demyanovich Uspensky",
+    "In Search of the Miraculous",
+  ],
+  [
+    "The opposition to gender, along with the defense of the family (against any challenge to its heteronormativity) and the nation (against any challenge to its racial purity), is linked with a eugenics that belongs to the history and present of fascism.",
+    "Judith Butler",
+    "Who's Afraid of Gender ?",
+  ],
+  [
+    "And if the central religious image was a woman giving birth and not, as in our time, a man dying on a cross, it would not be unreasonable to infer that life and the love of life rather than death and the fear of death—were dominant in society as well as art.",
+    "Riane Eisler",
+    "The Chalice and the Blade",
+  ],
+  [
+    "If we were not capable of such a distinction, then the only dignified lives would be those that mirrored our own—an assertion of narcissism, supremacy, and cultural arrogance that refuses the ethical encounter with difference.",
+    "Judith Butler",
+    "Who's Afraid of Gender ?",
+  ],
+];
+
+const noscriptQuote: [string, string, string] = quotes[Math.floor(Math.random() * quotes.length)];
 ---
 
+<script define:vars={{ quotes }}>
+  function setRandomQuote() {
+    const quoteBody = document.getElementById("quote-body");
+    const quoteAuthor = document.getElementById("quote-author");
+    if (!quoteBody || !quoteAuthor) return;
+    const currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    quoteBody.innerHTML = currentQuote[0];
+    quoteAuthor.innerHTML = `— ${currentQuote[1]} • ${currentQuote[2]}`;
+  }
+
+  document.addEventListener("astro:page-load", setRandomQuote);
+</script>
 <Layout>
   <LeftProfileLayout slotContainerClass="large:mx-0 -mx-4 w-full shrink-0">
     <BentoCards class="large:-mt-2">
       <GithubCard />
-      <BentoCard width={2} height={1} class="items-center justify-center p-0">
+      <!--<BentoCard width={2} height={1} class="items-center justify-center p-0">
         <Image src={KPDH} alt="KPOP Demon Hunters Poster" />
-      </BentoCard>
-      <BentoCard width={2} height={1}>
-        <blockquote>
-          “If we were unable to distinguish between them, then the only lives worthy of respect
-          would be those that resemble our own—an assertion of narcissism, supremacy, and cultural
-          arrogance that rejects any ethical encounter with difference.”
+      </BentoCard>-->
+      <BentoCard width={2} height={2}>
+        <blockquote
+          id="quote-body"
+          class="border-muted-foreground border-l-2 pl-2 text-justify text-base"
+        >
+          <noscript>
+            {noscriptQuote[0]}
+          </noscript>
         </blockquote>
+        <span id="quote-author" class="text-muted-foreground text-sm">
+          <noscript>
+            — {noscriptQuote[1]} • {noscriptQuote[2]}
+          </noscript>
+        </span>
       </BentoCard>
       <PostCard post={lastPost} />
 
