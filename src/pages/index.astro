@@ -23,9 +23,10 @@ const lastPost = (await getCollection("blog")).sort(
 type QuoteEntry = {
   text: string;
   author: string;
-  noteTitle: string;
-  notePublication: string;
+  noteTitle?: string;
+  notePublication?: string;
   noteEdition?: string;
+  noteExtra?: string;
 };
 
 const quotes: QuoteEntry[] = [
@@ -71,15 +72,65 @@ const quotes: QuoteEntry[] = [
     noteTitle: "Who's Afraid of Gender?",
     notePublication: "New York: Farrar, Straus and Giroux, 2024",
   },
+  {
+    text: "Isn't it time to say that the real problem is with those who stuff themselves?\nIt's not the immigrant's problem, it's not the problem of the person who doesn't share your religion!\nThe problem is the banker! The problem is Mulliez! That's the problem!\nHe has a name, he has an address!\nWe can change so many things, especially for these employees, these workers, these staff at every level, in the office and on the shop-floor.",
+    author: "Jean-Luc Mélenchon",
+    noteExtra: "speech, Tourcoing, Franche, January 8, 2017",
+  },
 ];
 
 const noscriptQuote = quotes[Math.floor(Math.random() * quotes.length)];
+
+const buildQuoteNote = (quote: QuoteEntry): string => {
+  const details: string[] = [];
+  if (quote.noteTitle) {
+    const editionPart = quote.noteEdition ? `, ${quote.noteEdition}` : "";
+    details.push(`<em>${quote.noteTitle}</em>${editionPart}`);
+  } else if (quote.noteEdition) {
+    details.push(quote.noteEdition);
+  }
+
+  if (quote.notePublication) {
+    details.push(`(${quote.notePublication})`);
+  }
+
+  if (quote.noteExtra) {
+    details.push(`(${quote.noteExtra})`);
+  }
+
+  const authorPart = quote.author ? `${quote.author}` : "";
+  const notePart = details.join(", ");
+
+  if (authorPart && notePart) return `${authorPart}, ${notePart}.`;
+  if (authorPart) return `${authorPart}.`;
+  if (notePart) return `${notePart}.`;
+  return "";
+};
 ---
 
 <script define:vars={{ quotes }}>
   function getFullNote(quote) {
-    const editionPart = quote.noteEdition ? `, ${quote.noteEdition}` : "";
-    return `${quote.author}, <em>${quote.noteTitle}</em>${editionPart} (${quote.notePublication}).`;
+    const details = [];
+    if (quote.noteTitle) {
+      const editionPart = quote.noteEdition ? `, ${quote.noteEdition}` : "";
+      details.push(`<em>${quote.noteTitle}</em>${editionPart}`);
+    } else if (quote.noteEdition) {
+      details.push(quote.noteEdition);
+    }
+
+    if (quote.notePublication) {
+      details.push(`(${quote.notePublication})`);
+    }
+
+    if (quote.noteExtra) {
+      details.push(`(${quote.noteExtra})`);
+    }
+
+    const notePart = details.join(", ");
+    if (quote.author && notePart) return `${quote.author}, ${notePart}.`;
+    if (quote.author) return `${quote.author}.`;
+    if (notePart) return `${notePart}.`;
+    return "";
   }
 
   function setRandomQuote() {
@@ -89,8 +140,11 @@ const noscriptQuote = quotes[Math.floor(Math.random() * quotes.length)];
     if (!quoteBody || !quoteAuthor || !quoteNote) return;
     const currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
     quoteBody.innerHTML = currentQuote.text;
-    quoteAuthor.innerHTML = `— ${currentQuote.author}<sup>1</sup>`;
-    quoteNote.innerHTML = `<sup>1</sup> ${getFullNote(currentQuote)}`;
+    const hasAuthor = Boolean(currentQuote.author);
+    quoteAuthor.innerHTML = hasAuthor ? `— ${currentQuote.author}<sup>1</sup>` : "—";
+    const fullNote = getFullNote(currentQuote);
+    quoteNote.innerHTML = fullNote ? `<sup>1</sup> ${fullNote}` : "";
+    quoteNote.hidden = !fullNote;
   }
 
   document.addEventListener("astro:page-load", setRandomQuote);
@@ -120,10 +174,8 @@ const noscriptQuote = quotes[Math.floor(Math.random() * quotes.length)];
         </div>
         <p id="quote-note" class="text-muted-foreground mt-1 text-xs leading-relaxed">
           <noscript>
-            <sup>1</sup>
-            {noscriptQuote.author}, <em>{noscriptQuote.noteTitle}</em>{
-              noscriptQuote.noteEdition ? `, ${noscriptQuote.noteEdition}` : ""
-            } ({noscriptQuote.notePublication}).
+            {buildQuoteNote(noscriptQuote) && <sup>1</sup>}
+            <span set:html={buildQuoteNote(noscriptQuote)} />
           </noscript>
         </p>
       </BentoCard>
