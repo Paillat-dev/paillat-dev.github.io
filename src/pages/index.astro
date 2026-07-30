@@ -6,19 +6,12 @@ import GithubCard from "$lib/components/cards/GithubCard.astro";
 import { Image } from "astro:assets";
 import EasyTextCard from "$lib/components/cards/EasyTextCard.astro";
 import TitleCard from "$lib/components/cards/TitleCard.astro";
-import KPDH from "$src/assets/kpdh.webp";
 import LinkedIn from "$src/assets/LI-In-Bug.png";
 import NiceBots from "$src/assets/nicebots.png";
 import Pycord from "$src/assets/pycord-logo-solid-256.png";
 import { Printables, Svelte, Github, Discord, Shadcnui, Tailwindcss } from "simple-icons-astro";
-import { Scale, Egg } from "@lucide/svelte";
+import { Egg, Pencil, NotepadTextDashed } from "@lucide/svelte";
 import BentoCards from "$lib/components/cards/BentoCards.astro";
-import { getCollection } from "astro:content";
-import PostCard from "$lib/components/cards/PostCard.astro";
-
-const lastPost = (await getCollection("blog")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-)[0];
 
 type QuoteEntry = {
   text: string;
@@ -108,7 +101,7 @@ const buildQuoteNote = (quote: QuoteEntry): string => {
 };
 ---
 
-<script define:vars={{ quotes }}>
+<script define:vars={{ quotes }} is:inline>
   function getFullNote(quote) {
     const details = [];
     if (quote.noteTitle) {
@@ -179,7 +172,24 @@ const buildQuoteNote = (quote: QuoteEntry): string => {
           </noscript>
         </p>
       </BentoCard>
-      <PostCard post={lastPost} />
+      <EasyTextCard
+        width={1}
+        height={1}
+        icon={Pencil}
+        href="/post"
+        title="Blog"
+        sub="Open my blog, where I maybe post things every once in a while."
+        brandColor="#000000"
+      />
+      <EasyTextCard
+        width={1}
+        height={1}
+        icon={NotepadTextDashed}
+        href="https://bs.paillat.dev"
+        title="bs.paillat.dev"
+        sub="View some less serious things I happen to have built."
+        brandColor="#000000"
+      />
 
       <EasyTextCard
         width={1}
@@ -259,13 +269,20 @@ const buildQuoteNote = (quote: QuoteEntry): string => {
       <EasyTextCard
         width={1}
         height={1}
-        href="https://mediationcorner.ch/"
-        title="Mediationcorner"
+        href="https://cotti.law/"
+        title="cotti.law"
         sub="A commissioned website. Built with Astro, Svelte and TailwindCSS."
-        icon={Scale}
         iconClass="text-foreground"
-        brandColor="transparent"
-      />
+        brandColor="#ffffff"
+      >
+        <Image
+          src="https://cotti.law/brand/logo_square.png"
+          alt="cotti.law Logo"
+          slot="icon"
+          class="bg-transparent"
+          inferSize={true}
+        />
+      </EasyTextCard>
       <EasyTextCard
         width={1}
         height={1}

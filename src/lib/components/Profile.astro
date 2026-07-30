@@ -4,7 +4,7 @@ import Avatar from "$src/assets/pfp.jpg";
 import { cn } from "$lib/utils.ts";
 import ThemeSwitcher from "src/lib/components/ThemeSwitcher.svelte";
 import { Button } from "./ui/button";
-
+import { Mail } from "@lucide/svelte";
 interface Props {
   class?: string;
 }
@@ -36,14 +36,10 @@ const { class: className = "" } = Astro.props as Props;
     <br />
     Chicago Manual of Style 17th edition (full note)
   </p>
-  <div class="flex flex-row gap-2">
-    {
-      !Astro.url.pathname.startsWith("/post") && (
-        <Button variant="link" href="/post">
-          Blog
-        </Button>
-      )
-    }
+  <div class="flex flex-row gap-4">
+    <Button href="mailto:contact@paillat.dev" class="mx-0 px-0">
+      Work with me <Mail />
+    </Button>
     <ThemeSwitcher client:load />
   </div>
 </section>
