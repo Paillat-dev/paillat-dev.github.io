@@ -20,30 +20,31 @@ const year = new Date().getFullYear();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="me" href="https://social.epfl.ch/@cotti">Mastodon</link>
+    <link rel="me" href="https://social.epfl.ch/@cotti" /></head
+  >Mastodon
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-    <BuyMeACoffee />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <BuyMeACoffee />
 
-    <Seo title={title} description={description} image={image} />
+  <Seo title={title} description={description} image={image} />
 
-    <ClientRouter />
-    <script is:inline>
-      function applyTheme() {
-        const stored = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const theme =
-          stored === "dark" || stored === "light" ? stored : prefersDark ? "dark" : "light";
-        document.documentElement.classList.remove("dark", "light");
-        document.documentElement.classList.add(theme);
-      }
+  <ClientRouter />
+  <script is:inline>
+    function applyTheme() {
+      const stored = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const theme =
+        stored === "dark" || stored === "light" ? stored : prefersDark ? "dark" : "light";
+      document.documentElement.classList.remove("dark", "light");
+      document.documentElement.classList.add(theme);
+    }
 
-      applyTheme();
-      document.removeEventListener("astro:after-swap", applyTheme);
-      document.addEventListener("astro:after-swap", applyTheme);
-    </script>
-    <slot name="head" />
-  </head>
+    applyTheme();
+    document.removeEventListener("astro:after-swap", applyTheme);
+    document.addEventListener("astro:after-swap", applyTheme);
+  </script>
+  <slot name="head" />
+
   <body class="bg-background text-foreground antialiased">
     <a href="#main-content" class="skip-to-content"> Skip to main content </a>
     <slot />
@@ -53,23 +54,25 @@ const year = new Date().getFullYear();
       </p>
     </footer>
   </body>
+
+  <style>
+    .skip-to-content {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--color-primary);
+      color: var(--color-primary-foreground);
+      padding: 8px 16px;
+      text-decoration: none;
+      z-index: 100;
+      font-weight: 600;
+      border-radius: 0 0 4px 0;
+    }
+
+    .skip-to-content:focus {
+      top: 0;
+    }
+  </style>
+
+
 </html>
-
-<style>
-  .skip-to-content {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--color-primary);
-    color: var(--color-primary-foreground);
-    padding: 8px 16px;
-    text-decoration: none;
-    z-index: 100;
-    font-weight: 600;
-    border-radius: 0 0 4px 0;
-  }
-
-  .skip-to-content:focus {
-    top: 0;
-  }
-</style>
