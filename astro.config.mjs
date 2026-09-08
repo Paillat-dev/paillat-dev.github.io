@@ -14,6 +14,6 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   image: {
-    domains: ["cotti.law"],
+    domains: ["www.cotti.law"],
   },
 });
