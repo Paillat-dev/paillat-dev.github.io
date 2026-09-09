@@ -9,7 +9,15 @@ import TitleCard from "$lib/components/cards/TitleCard.astro";
 import LinkedIn from "$src/assets/LI-In-Bug.png";
 import NiceBots from "$src/assets/nicebots.png";
 import Pycord from "$src/assets/pycord-logo-solid-256.png";
-import { Printables, Svelte, Github, Discord, Shadcnui, Tailwindcss, Mastodon } from "simple-icons-astro";
+import {
+  Printables,
+  Svelte,
+  Github,
+  Discord,
+  Shadcnui,
+  Tailwindcss,
+  Mastodon,
+} from "simple-icons-astro";
 import { Egg, Pencil, NotepadTextDashed } from "@lucide/svelte";
 import BentoCards from "$lib/components/cards/BentoCards.astro";
 
@@ -208,7 +216,6 @@ const buildQuoteNote = (quote: QuoteEntry): string => {
         title="Paillat"
         sub="Mastodon"
         icon={Mastodon}
-
       >
         <Image src={LinkedIn} alt="LinkedIn Logo" slot="icon" class="bg-transparent" />
       </EasyTextCard>
