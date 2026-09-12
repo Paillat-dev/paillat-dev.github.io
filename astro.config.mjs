@@ -14,6 +14,6 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   image: {
-    domains: ["www.cotti.law"],
+    domains: ["www.cotti.law", "seenshift.app"],
   },
 });
