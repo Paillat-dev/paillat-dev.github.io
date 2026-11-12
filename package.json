@@ -26,7 +26,7 @@
     "@astrojs/check": "^0.9.6",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/sitemap": "^3.7.0",
-    "@astrojs/svelte": "^7.2.5",
+    "@astrojs/svelte": "^9.0.0",
     "@eslint/js": "^10.0.0",
     "@fontsource-variable/tasa-orbiter": "^5.2.2",
     "@fontsource/tasa-orbiter": "^5.2.2",
